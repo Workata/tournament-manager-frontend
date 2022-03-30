@@ -14,7 +14,14 @@ import Home from "./pages/Home";
 function App() {
   return (
     <Router>
-      <Box>
+
+      <Box
+        sx={{
+          height: "100%",
+          display: "flex",
+          flexDirection: "column"
+        }}
+      >
         <Appbar />
 
         <Routes>
@@ -23,6 +30,7 @@ function App() {
 
         <Footer />
       </Box>
+
     </Router>
   );
 }
