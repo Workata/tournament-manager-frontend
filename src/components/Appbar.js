@@ -1,8 +1,117 @@
-// * material UI
-import { Box } from "@mui/material";
-
 import React from "react";
+// * material UI
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  //  Button,
+  Typography,
+  //     IconButton,
+  Box
+} from "@mui/material";
 
-export default function Appbar() {
-  return <Box>Appbar here</Box>;
+import "../css/general.css";
+
+// * navigation
+import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
+
+// * icons
+import MenuIcon from '@mui/icons-material/Menu';
+import PersonIcon from '@mui/icons-material/Person';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+// import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
+
+// const tokenValue = false;     // TODO change this later on
+// const currentURL = useLocation();
+
+export default function Appbar(props) {
+
+  const handleDrawerOpen = () => {
+    props.setOpenDrawer(true);
+  };
+
+  return (
+    <Box>
+      <AppBar position="static">
+        <Toolbar
+          sx={{
+            // * appbar color here
+            bgcolor: 'primary.turquoise'
+          }}
+        >
+          {/* Sidebar button */}
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{ mr: 2, ...(props.openDrawer && { display: 'none' }) }}
+          >
+            <MenuIcon />
+          </IconButton>
+
+          {/* App title with a link to the home page */}
+          <Link
+            to="/"
+            className="link"
+            style={{
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              display: 'flex'
+            }}
+          >
+            <Typography
+              variant="h5"
+              sx={{
+                color: 'primary.main'
+              }}
+            >
+              Tournament App
+            </Typography>
+            <AccountTreeIcon
+              sx={{
+                marginTop: '5px',
+                marginLeft: '5px',
+                color: 'primary.main',
+              }}
+            />
+          </Link>
+
+          {/* Sing in buttton */}
+          <Link
+            to="/login"
+            className="link"
+            style={{
+              display: 'flex'
+            }}
+          >
+            <PersonIcon
+              sx={{
+                marginRight: '5px',
+                color: 'primary.main',
+              }}
+            />
+            <Typography
+              variant="h7"
+              sx={{
+                color: 'primary.main'
+              }}
+            >
+              SIGN IN
+            </Typography>
+
+          </Link>
+
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
+}
+
+// TODO define correct prop types
+Appbar.propTypes = {
+  setOpenDrawer: PropTypes.any,
+  openDrawer: PropTypes.any
 }
