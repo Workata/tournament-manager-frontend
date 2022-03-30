@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 // * icons
 import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
-import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import SportsKabaddiIcon from '@mui/icons-material/SportsKabaddi';
 // import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
@@ -70,7 +70,7 @@ export default function Appbar(props) {
             >
               Tournament App
             </Typography>
-            <AccountTreeIcon
+            <SportsKabaddiIcon
               sx={{
                 marginTop: '5px',
                 marginLeft: '5px',

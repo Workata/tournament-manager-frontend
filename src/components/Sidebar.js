@@ -1,4 +1,4 @@
-import React from "react";
+// * material UI
 import {Drawer,
   IconButton,
   Divider,
@@ -8,13 +8,19 @@ import {Drawer,
   ListItemText
 } from "@mui/material";
 import { styled, useTheme } from '@mui/material/styles';
-import PropTypes from 'prop-types';
 
+// * others
+import PropTypes from 'prop-types';
+import React from "react";
+
+// * icons
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-// import HomeIcon from '@mui/icons-material/Home';
+import HomeIcon from '@mui/icons-material/Home';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import InfoIcon from '@mui/icons-material/Info';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
 // * Documentation: https://mui.com/components/drawers/#persistent-drawer
 
@@ -61,27 +67,44 @@ export default function Sidebar(props) {
       <Divider />
 
       <List>
-        {['Home', 'Brackets', 'Standings', 'Participants'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem button>
+          <ListItemIcon>
+            <HomeIcon/>
+          </ListItemIcon>
+          <ListItemText primary={"Home"} />
+        </ListItem>
+
+        <ListItem button>
+          <ListItemIcon>
+            <AccountTreeIcon/>
+          </ListItemIcon>
+          <ListItemText primary={"Brackets"} />
+        </ListItem>
+
+        <ListItem button>
+          <ListItemIcon>
+            <EmojiEventsIcon/>
+          </ListItemIcon>
+          <ListItemText primary={"Standings"} />
+        </ListItem>
+
+        <ListItem button>
+          <ListItemIcon>
+            <GroupAddIcon/>
+          </ListItemIcon>
+          <ListItemText primary={"Participants"} />
+        </ListItem>
       </List>
 
       <Divider />
 
       <List>
-        {['Info'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem button>
+          <ListItemIcon>
+            <InfoIcon/>
+          </ListItemIcon>
+          <ListItemText primary={"Info"} />
+        </ListItem>
       </List>
 
     </Drawer>
