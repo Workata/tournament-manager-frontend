@@ -72,17 +72,12 @@ Manage your single elimination tournament using intuitive user interface!
 
 <!-- This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section.-->
 
-#### Frontend
 * [React.js](https://reactjs.org/)
 * [Material UI](https://mui.com/)
 
-#### Backend
-* [Django](https://www.djangoproject.com/)
-* [MySQL](https://www.mysql.com/)
 
 #### Deploy
 * TODO
-
 
 
 <!-- GETTING STARTED -->
@@ -92,18 +87,14 @@ Manage your single elimination tournament using intuitive user interface!
 
 ### Prerequisites
 
-#### General
-
-TODO
-
 #### Development
 
-* [python](https://www.python.org/) (3.8.10) with [pip](https://pypi.org/) (20.0.2)
 * [node](https://nodejs.org/en/) (16.14.0) with [npm](https://docs.npmjs.com/) (8.3.1)
 
 #### Production
 
-TODO
+* [Docker](https://docs.docker.com/engine/install/)
+* [Docker Compose](https://docs.docker.com/compose/install/)
 
 &nbsp;
 
@@ -116,11 +107,18 @@ TODO
    ```sh
    git clone https://github.com/Workata/photo-album.git
    ```
-2. ...
 
 #### Development
 
-TODO
+1. Install needed libraries
+   ```sh
+   npm install
+   ```
+
+2. Start development server
+   ```sh
+   npm start
+   ```
 
 #### Production
 
