@@ -65,7 +65,10 @@ function App() {
           </Routes>
         </Main>
 
-        <Footer />
+        <Footer
+          openDrawer={openDrawer}
+          drawerWidth={drawerWidth}
+        />
       </Box>
 
     </Router>

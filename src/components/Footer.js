@@ -1,12 +1,14 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
-export default function Footer() {
+export default function Footer(props) {
   return (
     <footer
       style={{
         height: '30px',
         marginTop: 'auto',
-        width: '100%',
+        width: props.openDrawer ? `calc(100% - ${props.drawerWidth}px)` : '100%',
+        marginLeft: props.openDrawer ? `${props.drawerWidth}px` : '0px',
         backgroundColor: '#fafffd',
         color: 'black',
         textAlign: 'center',
@@ -16,4 +18,10 @@ export default function Footer() {
       © 2022 www.tournament-app.com Some Rights Reserved
     </footer>
   )
+}
+
+// TODO define correct prop types
+Footer.propTypes = {
+  openDrawer: PropTypes.any,
+  drawerWidth: PropTypes.any
 }

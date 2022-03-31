@@ -4,9 +4,7 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  //  Button,
   Typography,
-  //     IconButton,
   Box
 } from "@mui/material";
 
@@ -34,7 +32,14 @@ export default function Appbar(props) {
 
   return (
     <Box>
-      <AppBar position="static">
+      <AppBar
+        position="static"
+        sx={{
+          // * calculate appbar size
+          width: props.openDrawer ? `calc(100% - ${props.drawerWidth}px)` : '100%',
+          marginLeft: props.openDrawer ? `${props.drawerWidth}px` : '0px'
+        }}
+      >
         <Toolbar
           sx={{
             // * appbar color here
@@ -113,5 +118,6 @@ export default function Appbar(props) {
 // TODO define correct prop types
 Appbar.propTypes = {
   setOpenDrawer: PropTypes.any,
-  openDrawer: PropTypes.any
+  openDrawer: PropTypes.any,
+  drawerWidth: PropTypes.any
 }
