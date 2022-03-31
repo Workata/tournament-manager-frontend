@@ -13,6 +13,9 @@ import { styled, useTheme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import React from "react";
 
+// * navigation
+import { useNavigate } from "react-router-dom";
+
 // * icons
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -28,6 +31,7 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd';
 export default function Sidebar(props) {
 
   const theme = useTheme();
+  let navigate = useNavigate();
 
   const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -66,29 +70,30 @@ export default function Sidebar(props) {
 
       <Divider />
 
+      {/* TODO change ListItem for component */}
       <List>
-        <ListItem button>
+        <ListItem button onClick={ () => {return navigate("/")} }>
           <ListItemIcon>
             <HomeIcon/>
           </ListItemIcon>
           <ListItemText primary={"Home"} />
         </ListItem>
 
-        <ListItem button>
+        <ListItem button onClick={ () => {return navigate("/brackets")} }>
           <ListItemIcon>
             <AccountTreeIcon/>
           </ListItemIcon>
           <ListItemText primary={"Brackets"} />
         </ListItem>
 
-        <ListItem button>
+        <ListItem button onClick={ () => {return navigate("/standings")} }>
           <ListItemIcon>
             <EmojiEventsIcon/>
           </ListItemIcon>
           <ListItemText primary={"Standings"} />
         </ListItem>
 
-        <ListItem button>
+        <ListItem button onClick={ () => {return navigate("/participants")} }>
           <ListItemIcon>
             <GroupAddIcon/>
           </ListItemIcon>
@@ -99,7 +104,7 @@ export default function Sidebar(props) {
       <Divider />
 
       <List>
-        <ListItem button>
+        <ListItem button onClick={ () => {return navigate("/info")} }>
           <ListItemIcon>
             <InfoIcon/>
           </ListItemIcon>
