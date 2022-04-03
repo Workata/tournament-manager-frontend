@@ -1,0 +1,22 @@
+{
+	"name": "React front-end dev",
+	"dockerComposeFile": [
+		"../docker-compose.yml"
+	],
+	"service": "react",
+	"workspaceFolder": "/project",
+	"settings": {
+		
+		"launch": {
+			"version": "0.2.0",
+			"configurations": [
+				
+			]
+		}
+	},
+	"extensions": [
+		"patbenatar.advanced-new-file"
+	],
+	"shutdownAction": "stopCompose",
+	"remoteUser": "node"
+}
