@@ -30,6 +30,10 @@ export default function Appbar(props) {
     props.setOpenDrawer(true);
   };
 
+  const handleOpenSignIn = () => {
+    props.setOpenSignIn(true);
+  };
+
   return (
     <Box>
       <AppBar
@@ -52,7 +56,7 @@ export default function Appbar(props) {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            sx={{ mr: 2, ...(props.openDrawer && { display: 'none' }) }}
+            sx={{ color: 'primary.main', mr: 2, ...(props.openDrawer && { display: 'none' }) }}
           >
             <MenuIcon />
           </IconButton>
@@ -85,30 +89,22 @@ export default function Appbar(props) {
           </Link>
 
           {/* Sing in buttton */}
-          <Link
-            to="/login"
-            className="link"
-            style={{
-              display: 'flex'
-            }}
-          >
+          <IconButton onClick={handleOpenSignIn}>
             <PersonIcon
               sx={{
                 marginRight: '5px',
                 color: 'primary.main',
               }}
             />
-            <Typography
-              variant="h7"
-              sx={{
+              <Typography
+                variant="h6"
+                sx={{
                 color: 'primary.main'
-              }}
-            >
-              SIGN IN
+                }}
+              >
+              Sign in
             </Typography>
-
-          </Link>
-
+          </IconButton>
         </Toolbar>
       </AppBar>
     </Box>
@@ -119,5 +115,6 @@ export default function Appbar(props) {
 Appbar.propTypes = {
   setOpenDrawer: PropTypes.any,
   openDrawer: PropTypes.any,
-  drawerWidth: PropTypes.any
+  drawerWidth: PropTypes.any,
+  setOpenSignIn: PropTypes.any
 }

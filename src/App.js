@@ -6,7 +6,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // * components
 import Appbar from "./components/Appbar";
 import Footer from "./components/Footer";
-import Sidebar from "./components/Sidebar"
+import Sidebar from "./components/Sidebar";
+import SignIn from "./components/SignIn";
 import { styled } from '@mui/material/styles';
 
 // * pages
@@ -15,6 +16,8 @@ import Home from "./pages/Home";
 function App() {
 
   const [openDrawer, setOpenDrawer] = useState(false);
+
+  const [openSignIn, setOpenSignIn] = useState(false);
 
   const drawerWidth = 240;
 
@@ -51,6 +54,7 @@ function App() {
           openDrawer={openDrawer}
           setOpenDrawer={setOpenDrawer}
           drawerWidth={drawerWidth}
+          setOpenSignIn={setOpenSignIn}
         />
 
         <Sidebar
@@ -58,7 +62,10 @@ function App() {
           setOpenDrawer={setOpenDrawer}
           drawerWidth={drawerWidth}
         />
-
+        <SignIn
+          openSignIn={openSignIn}
+          setOpenSignIn={setOpenSignIn}
+        />
         <Main open={openDrawer}>
           <Routes>
             <Route exact path="/" element={<Home />} />
