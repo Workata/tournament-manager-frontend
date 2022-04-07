@@ -1,6 +1,9 @@
 import React, {useState} from "react";
 // * material UI
 import { Box } from "@mui/material";
+import { styled } from '@mui/material/styles';
+
+// * navigation
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // * components
@@ -8,10 +11,11 @@ import Appbar from "./components/Appbar";
 import Footer from "./components/Footer";
 import Sidebar from "./components/Sidebar";
 import SignIn from "./components/SignIn";
-import { styled } from '@mui/material/styles';
 
 // * pages
 import Home from "./pages/Home";
+import Brackets from "./pages/Brackets";
+
 
 function App() {
 
@@ -62,13 +66,16 @@ function App() {
           setOpenDrawer={setOpenDrawer}
           drawerWidth={drawerWidth}
         />
+
         <SignIn
           openSignIn={openSignIn}
           setOpenSignIn={setOpenSignIn}
         />
+
         <Main open={openDrawer}>
           <Routes>
             <Route exact path="/" element={<Home />} />
+            <Route exact path="/brackets" element={<Brackets />} />
           </Routes>
         </Main>
 

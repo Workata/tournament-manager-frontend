@@ -108,7 +108,14 @@ export default function Sidebar(props) {
           <ListItemIcon>
             <InfoIcon/>
           </ListItemIcon>
-          <ListItemText primary={"Info"} />
+          <ListItemText primary={"Tournament Info"} />
+        </ListItem>
+
+        <ListItem button onClick={ () => {return navigate("/info")} }>
+          <ListItemIcon>
+            <InfoIcon/>
+          </ListItemIcon>
+          <ListItemText primary={"Application Info"} />
         </ListItem>
       </List>
 
