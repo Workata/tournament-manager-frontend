@@ -93,11 +93,11 @@ export default function Sidebar(props) {
           <ListItemText primary={"Standings"} />
         </ListItem>
 
-        <ListItem button onClick={ () => {return navigate("/participants")} }>
+        <ListItem button onClick={ () => {return navigate("/addParticipants")} }>
           <ListItemIcon>
             <GroupAddIcon/>
           </ListItemIcon>
-          <ListItemText primary={"Participants"} />
+          <ListItemText primary={"Add participants"} />
         </ListItem>
       </List>
 
