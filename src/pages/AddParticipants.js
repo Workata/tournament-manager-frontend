@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // * material UI
 import {
@@ -14,14 +14,41 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 // * components
 import ParticipantForm from "../components/ParticipantForm";
 
+// import uniqid from 'uniqid';
+
 export default function AddParticipants() {
+  const [participantsForms, setParticipantsForms] = useState([<ParticipantForm key={1} formId={1}/>]);
+
+
+  const handleAddForm = () => {
+    // console.log("Handle add form triggered");
+
+    setParticipantsForms(participantsForms => (
+        [...participantsForms,
+          <ParticipantForm
+            key={participantsForms.length + 1}
+            formId={participantsForms.length + 1}
+          />
+        ]
+      )
+    );
+
+    console.log(participantsForms);
+
+  }
+
+  const handleSubmit = () => {
+    console.log("Submit forms:")
+    console.log(participantsForms)
+  }
+
   return (
     // Main container
     <Box
       sx={{
         width: '100%',
         height: '100%',
-        borderStyle: 'solid'
+        // borderStyle: 'solid'
       }}
     >
       <Box
@@ -59,6 +86,7 @@ export default function AddParticipants() {
           }}
           variant="outlined"
           color="secondary"
+          onClick={handleSubmit}
         >
           Submit
         </Button>
@@ -68,31 +96,50 @@ export default function AddParticipants() {
       {/* Forms Wrapper */}
       <Box
         sx={{
-          // display: 'flex',
-          borderStyle: 'solid',
-          // width: '80%',
+          display: 'flex',
+          // borderStyle: 'solid',
+          width: '100%',
           height: '80%',
           marginLeft: 'auto',
           marginRight: 'auto',
           marginTop: '40px'
         }}
       >
-        <ParticipantForm/>
-        {/* <ParticipantForm/> */}
-
-        <IconButton
-          sx={{}}
-          onClick={()=>{console.log("XD")}}
-        >
-          <AddCircleIcon
+        <Box
           sx={{
-            fontSize: '70px',
-            color: 'primary.turquoise'
+            width: '90%',
+            display: 'flex',
+            justifyContent: 'flex-start',
+            overflowY: 'hidden'
+          }}
+        >
+          {participantsForms.map((form, i)=> {
+            return (<Box key={i} sx={{marginLeft: '20px', marginRight: '20px'}}>{form}</Box>)
+          })}
+        </Box>
+
+        <Box
+          sx={{
+            // borderStyle: 'solid',
+          }}
+        >
+          <IconButton
+            sx={{
+              marginTop: "320px",
             }}
-          />
-         </IconButton>
+            onClick={handleAddForm}
+          >
+            <AddCircleIcon
+            sx={{
+              fontSize: '70px',
+              color: 'primary.turquoise'
+              }}
+            />
+          </IconButton>
+        </Box>
 
       </Box>
     </Box>
   );
 }
+

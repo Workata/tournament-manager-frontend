@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from 'prop-types';
 
 // * material UI
 import {
@@ -9,12 +10,14 @@ import {
   MenuItem,
   FormControl
  } from "@mui/material";
+
 // needed for date of birth input
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
-export default function ParticipantForm() {
+
+export default function ParticipantForm(props) {
 
   const [dateOfBirth, setDateOfBirth] = useState(new Date('2014-08-18T21:11:54'));
   const [sex, setSex] = useState(1);
@@ -33,7 +36,7 @@ export default function ParticipantForm() {
         padding: '20px'
       }}
     >
-      <Typography variant ="h6">1.</Typography>
+      <Typography variant ="h6">{props.formId}.</Typography>
 
       <FormControl
         sx={{color: 'secondary'}}
@@ -98,4 +101,9 @@ export default function ParticipantForm() {
 
     </Box>
   )
+}
+
+// TODO define correct prop types
+ParticipantForm.propTypes = {
+  formId: PropTypes.any,
 }
