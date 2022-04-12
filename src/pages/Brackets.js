@@ -54,6 +54,7 @@ export default function Brackets() {
         width: "100%",
         height: "100%",
         boxShadow: "8px 8px 24px 0px rgba(66, 68, 90, 1)",
+        backgroundColor: "primary.main"
       }}
       ref={containerRef}
     >
