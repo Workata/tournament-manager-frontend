@@ -15,8 +15,8 @@ import SignIn from "./components/SignIn";
 // * pages
 import Home from "./pages/Home";
 import Brackets from "./pages/Brackets";
+import Participants from "./pages/Participants";
 import AddParticipants from "./pages/AddParticipants";
-
 
 function App() {
 
@@ -77,6 +77,7 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/brackets" element={<Brackets />} />
+            <Route exact path="/participants" element={<Participants />} />
             <Route exact path="/addParticipants" element={<AddParticipants />} />
           </Routes>
         </Main>
