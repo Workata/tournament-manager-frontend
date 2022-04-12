@@ -2,6 +2,7 @@ import React from "react";
 import Tree from "react-d3-tree";
 import competitors from "../data/competitors.json";
 import { useCallback, useState } from "react";
+import CategoryFilter from '../components/CategoryFilter';
 
 // * material UI
 import { Box } from "@mui/material";
@@ -49,29 +50,35 @@ export default function Brackets() {
   const [dimensions, translate, containerRef] = useCenteredTree();
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        height: "100%",
-        boxShadow: "8px 8px 24px 0px rgba(66, 68, 90, 1)",
-        backgroundColor: "primary.main"
-      }}
-      ref={containerRef}
-    >
-      {/* props docs: https://bkrem.github.io/react-d3-tree/docs/interfaces/_tree_types_.treeprops.html */}
-      <Tree
-        data={competitors}
-        renderCustomNodeElement={renderRectSvgNode}
+    <>
+      <Box sx={{marginBottom: '20px'}}>
+        <CategoryFilter/>
+      </Box>
 
-        dimensions={dimensions}
-        translate={translate}
+      <Box
+        sx={{
+          width: "100%",
+          height: "90%",
+          boxShadow: "8px 8px 24px 0px rgba(66, 68, 90, 1)",
+          backgroundColor: "primary.main"
+        }}
+        ref={containerRef}
+      >
+        {/* props docs: https://bkrem.github.io/react-d3-tree/docs/interfaces/_tree_types_.treeprops.html */}
+        <Tree
+          data={competitors}
+          renderCustomNodeElement={renderRectSvgNode}
 
-        orientation="horizontal"
-        depthFactor={-200}  // negative value to invert tree direction
-        pathFunc="step"
-        separation= { { nonSiblings: 1, siblings: 0.5 } }
-        zoomable={true}
-      />
-    </Box>
+          dimensions={dimensions}
+          translate={translate}
+
+          orientation="horizontal"
+          depthFactor={-200}  // negative value to invert tree direction
+          pathFunc="step"
+          separation= { { nonSiblings: 1, siblings: 0.5 } }
+          zoomable={true}
+        />
+      </Box>
+    </>
   );
 }

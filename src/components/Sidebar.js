@@ -24,6 +24,7 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import InfoIcon from '@mui/icons-material/Info';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import GroupIcon from '@mui/icons-material/Group';
 
 // * Documentation: https://mui.com/components/drawers/#persistent-drawer
 
@@ -93,12 +94,20 @@ export default function Sidebar(props) {
           <ListItemText primary={"Standings"} />
         </ListItem>
 
+        <ListItem button onClick={ () => {return navigate("/participants")} }>
+          <ListItemIcon>
+            <GroupIcon/>
+          </ListItemIcon>
+          <ListItemText primary={"Participants"} />
+        </ListItem>
+
         <ListItem button onClick={ () => {return navigate("/addParticipants")} }>
           <ListItemIcon>
             <GroupAddIcon/>
           </ListItemIcon>
           <ListItemText primary={"Add participants"} />
         </ListItem>
+
       </List>
 
       <Divider />
