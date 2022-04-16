@@ -8,7 +8,8 @@ import {
   Typography,
   Select,
   MenuItem,
-  FormControl
+  FormControl,
+  InputLabel
  } from "@mui/material";
 
 // needed for date of birth input
@@ -19,9 +20,8 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
 export default function ParticipantForm(props) {
 
-  const [dateOfBirth, setDateOfBirth] = useState(new Date('2014-08-18T21:11:54'));
-  const [sex, setSex] = useState(1);
-  const inputWidth = 255;
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [gender, setGender] = useState('');
 
   return (
     <Box
@@ -39,17 +39,18 @@ export default function ParticipantForm(props) {
       <Typography variant ="h6">{props.formId}.</Typography>
 
       <FormControl
-        sx={{color: 'secondary'}}
+        sx={{color: 'secondary', width: '255px'}}
       >
         <TextField
-          sx={{marginTop: '15px', width: `${inputWidth}px`}}
+          sx={{marginTop: '15px'}}
           label="First name"
+          autoComplete="new-password"
           type="text"
           color="secondary"
         />
 
         <TextField
-          sx={{marginTop: '15px', width:  `${inputWidth}px`}}
+          sx={{marginTop: '15px'}}
           label="Last name"
           type="text"
           color="secondary"
@@ -59,13 +60,13 @@ export default function ParticipantForm(props) {
           <DesktopDatePicker
             label="Date of birth"
             inputFormat="dd/MM/yyyy"
-            value={dateOfBirth}
+            value={dateOfBirth || null}
             onChange={(newDateOfBirth) => {setDateOfBirth(newDateOfBirth)}}
             renderInput={
               (params) => <TextField {...params}
                 sx={{
                   marginTop: '15px',
-                  color: 'secondary'
+                  color: 'secondary.main'
                 }}
                 color = 'secondary'
                 InputLabelProps = {{
@@ -77,28 +78,29 @@ export default function ParticipantForm(props) {
         </LocalizationProvider>
 
         <TextField
-          sx={{marginTop: '15px', width:  `${inputWidth}px`}}
+          sx={{marginTop: '15px'}}
           label="Country"
           type="text"
           color="secondary"
+          // * tun off autocomplete
+          autoComplete="new-password"
         />
 
-        <Select
-          sx={{
-            marginTop: '15px',
-            width:  `${inputWidth}px`,
-            color: 'secondary',
-          }}
-          value={sex}
-          label="Sex" // TODO set label color for black - right now its white so you cant see it
-          onChange={(event) => {setSex(event.target.value)}}
-          color='secondary'
-        >
-          <MenuItem value={1}>Female</MenuItem>
-          <MenuItem value={2}>Male</MenuItem>
-        </Select>
-      </FormControl>
+        <FormControl sx={{color: 'secondary', marginTop: '15px'}} >
+          <InputLabel id="genderSelectLabel" color='secondary' sx={{color: 'secondary.main'}}>Gender</InputLabel>
+          <Select
+            labelId="genderSelectLabel"
+            value={gender}
+            label="Gender"
+            onChange={(event) => {setGender(event.target.value)}}
+            color='secondary'
+          >
+            <MenuItem value={1}>Female</MenuItem>
+            <MenuItem value={2}>Male</MenuItem>
+          </Select>
+        </FormControl>
 
+      </FormControl>
     </Box>
   )
 }

@@ -72,6 +72,7 @@ export default function AddParticipants() {
 
         <TextField
           sx={{marginLeft: '15px', width: '250px'}}
+          autoComplete="new-password"
           label="Club"
           type="text"
           color="secondary"

@@ -17,6 +17,7 @@ import Home from "./pages/Home";
 import Brackets from "./pages/Brackets";
 import Participants from "./pages/Participants";
 import AddParticipants from "./pages/AddParticipants";
+import Standings from "./pages/Standings";
 
 function App() {
 
@@ -79,6 +80,7 @@ function App() {
             <Route exact path="/brackets" element={<Brackets />} />
             <Route exact path="/participants" element={<Participants />} />
             <Route exact path="/addParticipants" element={<AddParticipants />} />
+            <Route exact path="/standings" element={<Standings/>} />
           </Routes>
         </Main>
 
