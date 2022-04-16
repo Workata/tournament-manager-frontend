@@ -1,0 +1,6 @@
+.standing {
+    padding: 10px;
+    border-bottom: 3px solid var(--primary-turquoise);
+    text-align: center;
+    width: fit-content;
+}
