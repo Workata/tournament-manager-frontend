@@ -117,14 +117,14 @@ export default function Sidebar(props) {
           <ListItemIcon>
             <InfoIcon/>
           </ListItemIcon>
-          <ListItemText primary={"Tournament Info"} />
+          <ListItemText primary={"About tournament"} />
         </ListItem>
 
         <ListItem button onClick={ () => {return navigate("/appInfo")} }>
           <ListItemIcon>
             <InfoIcon/>
           </ListItemIcon>
-          <ListItemText primary={"Application Info"} />
+          <ListItemText primary={"About application"} />
         </ListItem>
       </List>
 

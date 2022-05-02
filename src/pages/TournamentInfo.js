@@ -4,9 +4,12 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../css/tournamentInfo.css";
+import Moment from "moment";
+
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import Moment from 'moment';
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import PhoneIcon from "@mui/icons-material/Phone";
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 
 export default function TournamentInfo() {
   const [tournamentInfo, setTournamentInfo] = useState();
@@ -14,10 +17,12 @@ export default function TournamentInfo() {
   useEffect(() => {
     var data = {
       id: 1,
-      name: "XYZ Tournament",
+      name: "Tournament example",
       startDate: "2022-05-02",
       endDate: "2022-05-06",
       location: "Some Street, Some City",
+      phoneNumber: "+48 723 612 021",
+      email: "test@email.com"
     };
 
     setTournamentInfo(new Tournament(data));
@@ -55,7 +60,7 @@ export default function TournamentInfo() {
       <Typography
         variant="h4"
         sx={{
-          textAlign: "center",
+          marginBottom: "20px",
         }}
       >
         {tournamentInfo.name}
@@ -63,30 +68,84 @@ export default function TournamentInfo() {
       <Typography
         variant="h6"
         sx={{
-          textAlign: "center",
           marginTop: "10px",
         }}
       >
-        <div>
-          <AccessTimeIcon/>
-          Starting at: {Moment(tournamentInfo.startDate).format('HH:mm, YYYY-MM-DD')}
+        <div className="torunamentInfo-wrapper">
+          <div className="torunamentInfo-block-left">
+            <div>
+              {/*Tournament dates*/}
+              <AccessTimeIcon
+                sx={{
+                  color: "primary.turquoise",
+                  float: "left",
+                  marginTop: "4px",
+                }}
+              />
+              <ul>
+                <li>
+                  Starting at:{" "}
+                  {Moment(tournamentInfo.startDate).format("HH:mm, YYYY-MM-DD")}
+                </li>
+                <li>
+                  Ending at:{" "}
+                  {Moment(tournamentInfo.endDate).format("HH:mm, YYYY-MM-DD")}
+                </li>
+              </ul>
+            </div>
+
+            {/*Tournament location*/}
+            <LocationOnIcon
+              sx={{
+                marginTop: "4px",
+                color: "primary.turquoise",
+                float: "left",
+              }}
+            />
+            <ul>
+              <li>{tournamentInfo.location}</li>
+            </ul>
+
+            {/*Tournament phone number*/}
+            {tournamentInfo.phoneNumber && (
+              <>
+                <PhoneIcon
+                  sx={{
+                    marginTop: "4px",
+                    color: "primary.turquoise",
+                    float: "left",
+                  }}
+                />
+                <ul>
+                  <li>{tournamentInfo.phoneNumber}</li>
+                </ul>
+              </>
+            )}
+
+             {/*Tournament email*/}
+             {tournamentInfo.email && (
+              <>
+                <AlternateEmailIcon
+                  sx={{
+                    marginTop: "4px",
+                    color: "primary.turquoise",
+                    float: "left",
+                  }}
+                />
+                <ul>
+                  <li>{tournamentInfo.email}</li>
+                </ul>
+              </>
+            )}
+
+          </div>
+          <div className="torunamentInfo-block-right">
+            <Calendar
+              className="torunamentInfo-calendar"
+              value={[tournamentInfo.startDate, tournamentInfo.endDate]}
+            />
+          </div>
         </div>
-       
-        <div>
-          <AccessTimeIcon/>
-          Ending at: {Moment(tournamentInfo.endDate).format('HH:mm, YYYY-MM-DD')}
-        </div>
-        
-        <Calendar
-          className="torunamentInfo-calendar"
-          value={[tournamentInfo.startDate, tournamentInfo.endDate]}
-        />
-        <LocationOnIcon
-          sx={{
-            marginTop: "10px"
-          }}
-        />
-        {tournamentInfo.location}
       </Typography>
     </Box>
   );
