@@ -8,16 +8,8 @@ import { Box } from "@mui/material";
 export default function Standings() {
   const [standings, setStandings] = useState([])
 
-  // * helpers for SVG drawing
-  //const standingStrokeWidth = 3;
-  //const separatorStrokeWidth = 1;
-  //const standingYAxisStart = 40;
-  //const standingYAxisInterval = 15;
   const fullNameFontSize = 20;
   const standingNumberFontSize = 35;
-  //const standingNumberFontSize = 30;
-  //const standingNumberMaringTop = 5;
-  //const standingColor = "rgb(0,0,0)";
 
   useEffect(() => {
     // TODO fetch standings every time the category has been changed in select

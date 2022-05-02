@@ -113,14 +113,14 @@ export default function Sidebar(props) {
       <Divider />
 
       <List>
-        <ListItem button onClick={ () => {return navigate("/info")} }>
+        <ListItem button onClick={ () => {return navigate("/tournamentInfo")} }>
           <ListItemIcon>
             <InfoIcon/>
           </ListItemIcon>
           <ListItemText primary={"Tournament Info"} />
         </ListItem>
 
-        <ListItem button onClick={ () => {return navigate("/info")} }>
+        <ListItem button onClick={ () => {return navigate("/appInfo")} }>
           <ListItemIcon>
             <InfoIcon/>
           </ListItemIcon>
