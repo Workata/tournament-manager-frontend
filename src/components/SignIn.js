@@ -15,6 +15,7 @@ import React, {useState} from "react";
 
 // * icons
 import LoginIcon from '@mui/icons-material/Login';
+import { getAccessToken } from "../services/loginService";
 
 export default function SignIn(props) {
 
@@ -42,23 +43,24 @@ export default function SignIn(props) {
   const handleLoginButton = async () => {
       console.log(password)
       console.log(email)
-      fetch('http://127.0.0.1:8000/api/token/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: new URLSearchParams({
-          username: email,
-          password: password
-        })
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data)
-        })
-        .catch((error) => {
-          console.error(error)
-        })
+      await getAccessToken(email, password);
+      // fetch('http://127.0.0.1:8000/api/token/', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/x-www-form-urlencoded'
+      //   },
+      //   body: new URLSearchParams({
+      //     username: email,
+      //     password: password
+      //   })
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     console.log(data)
+      //   })
+      //   .catch((error) => {
+      //     console.error(error)
+      //   })
     }
 
 return (

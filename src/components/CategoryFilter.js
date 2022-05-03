@@ -1,18 +1,24 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { getCategories } from "../services/categoryService";
 
 
 export default function CategoryFilter() {
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState();     // * current selected category
+  const [categories, setCategories] = useState(); // * all categories
 
   const handleChange = (event) => {
     setCategory(event.target.value);
   };
+
+  useEffect(() => {
+    getCategories(setCategories);
+  }, [])
 
   return (
     <Box
@@ -34,10 +40,13 @@ export default function CategoryFilter() {
           color="secondary"
           onChange={handleChange}
         >
-          <MenuItem value={1}>Category A</MenuItem>
-          <MenuItem value={2}>Category B</MenuItem>
-          <MenuItem value={3}>Category C</MenuItem>
-          <MenuItem value={4}>Category D</MenuItem>
+          {
+            categories && categories.map((category) => {
+              return(
+                <MenuItem key={category.id} value={parseInt(category.id)}>{category.name}</MenuItem>
+              )
+            })
+          }
         </Select>
       </FormControl>
 

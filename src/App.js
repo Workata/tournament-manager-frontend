@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 // * material UI
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { styled } from '@mui/material/styles';
 
 // * navigation
@@ -20,9 +20,13 @@ import AddParticipants from "./pages/AddParticipants";
 import Standings from "./pages/Standings";
 import TournamentInfo from "./pages/TournamentInfo";
 
+// * utils
+import {handleAxios} from "./utils/ConfigHandler";
+
 function App() {
 
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [openSignIn, setOpenSignIn] = useState(false);
 
@@ -47,6 +51,11 @@ function App() {
     }),
   );
 
+  useEffect(() => {
+    handleAxios(setIsLoading);
+  }, [])
+
+  if(!isLoading) {
   return (
     <Router>
 
@@ -94,6 +103,8 @@ function App() {
 
     </Router>
   );
+  }
+  return (<CircularProgress sx={{ color: "primary.turquoise" }} />)
 }
 
 export default App;
