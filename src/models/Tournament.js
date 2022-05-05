@@ -1,11 +1,11 @@
 export class Tournament {
-      constructor({id, name, startDate, endDate, location, phoneNumber, email}) {
+      constructor({id, name, start_date, end_date, location, phone_number, email}) {
         this.id = id;
         this.name = name;
-        this.startDate = new Date(startDate);
-        this.endDate = new Date(endDate);
+        this.startDate = new Date(start_date);
+        this.endDate = new Date(end_date);
         this.location = location;
-        this.phoneNumber = phoneNumber;
+        this.phoneNumber = phone_number;
         this.email = email;
       };
 }

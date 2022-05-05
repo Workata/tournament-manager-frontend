@@ -10,22 +10,17 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PhoneIcon from "@mui/icons-material/Phone";
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
+import { getTournament } from "../services/tournamentService";
 
 export default function TournamentInfo() {
   const [tournamentInfo, setTournamentInfo] = useState();
 
   useEffect(() => {
-    var data = {
-      id: 1,
-      name: "Tournament example",
-      startDate: "2022-05-02",
-      endDate: "2022-05-06",
-      location: "Some Street, Some City",
-      phoneNumber: "+48 723 612 021",
-      email: "test@email.com"
-    };
-
-    setTournamentInfo(new Tournament(data));
+    getTournament((res) => {
+      setTournamentInfo(new Tournament(res.data));
+    }, (err) => {
+      console.log(err);
+    })
   }, []);
 
   if (!tournamentInfo) {
@@ -142,7 +137,11 @@ export default function TournamentInfo() {
           <div className="torunamentInfo-block-right">
             <Calendar
               className="torunamentInfo-calendar"
-              value={[tournamentInfo.startDate, tournamentInfo.endDate]}
+              // convert Datetime to only Date string and convert it to Date
+              value={[
+                new Date(Moment(tournamentInfo.startDate).format("YYYY-MM-DD")),
+                new Date(Moment(tournamentInfo.endDate).format("YYYY-MM-DD"))
+              ]}
             />
           </div>
         </div>

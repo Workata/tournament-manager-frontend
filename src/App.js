@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 // * material UI
 import { Box, CircularProgress } from "@mui/material";
 import { styled } from '@mui/material/styles';
@@ -22,12 +22,13 @@ import TournamentInfo from "./pages/TournamentInfo";
 
 // * utils
 import {handleAxios} from "./utils/ConfigHandler";
+import { AppContext } from './contexts/AppContext';
 
 function App() {
+  const { getTokenCookie, tokenValue, setTokenValue } = useContext(AppContext)
 
   const [openDrawer, setOpenDrawer] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
   const [openSignIn, setOpenSignIn] = useState(false);
 
   const drawerWidth = 240;
@@ -51,8 +52,13 @@ function App() {
     }),
   );
 
+  // * on App load:
   useEffect(() => {
+    // * load config file to axios (baseUrl for endpoints)
     handleAxios(setIsLoading);
+
+    // * verify if cookie with token exists
+    if (!tokenValue) { setTokenValue(getTokenCookie('token')) }
   }, [])
 
   if(!isLoading) {
