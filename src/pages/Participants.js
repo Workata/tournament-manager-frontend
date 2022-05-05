@@ -5,9 +5,7 @@ import {
   Box,
 } from "@mui/material";
 
-// * icons
 import { DataGrid } from '@mui/x-data-grid';
-
 import CategoryFilter from '../components/CategoryFilter';
 
 const columns = [

@@ -25,6 +25,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import GroupIcon from '@mui/icons-material/Group';
+import AccessibilityIcon from '@mui/icons-material/Accessibility';
 
 // * Documentation: https://mui.com/components/drawers/#persistent-drawer
 
@@ -106,6 +107,13 @@ export default function Sidebar(props) {
             <GroupAddIcon/>
           </ListItemIcon>
           <ListItemText primary={"Add participants"} />
+        </ListItem>
+
+        <ListItem button onClick={ () => {return navigate("/categories")} }>
+          <ListItemIcon>
+            <AccessibilityIcon/>
+          </ListItemIcon>
+          <ListItemText primary={"Categories"} />
         </ListItem>
 
       </List>
