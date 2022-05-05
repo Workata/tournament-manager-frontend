@@ -5,11 +5,16 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+
+// * services
 import { getCategories } from "../services/categoryService";
+
+//  * models
+import { Category } from "../models/Category";
 
 
 export default function CategoryFilter() {
-  const [category, setCategory] = useState();     // * current selected category
+  const [category, setCategory] = useState('');     // * current selected category
   const [categories, setCategories] = useState(); // * all categories
 
   const handleChange = (event) => {
@@ -17,7 +22,14 @@ export default function CategoryFilter() {
   };
 
   useEffect(() => {
-    getCategories(setCategories);
+    getCategories((res) => {
+      let categoriesObjects = res.data.map(
+        (categoryJson) => new Category(categoryJson)
+      );
+      setCategories(categoriesObjects);
+    }, (err) => {
+      console.log(err);
+    });
   }, [])
 
   return (
@@ -34,7 +46,7 @@ export default function CategoryFilter() {
 
         <Select
           labelId="categoryFilter"
-          id="demo-simple-select"
+          id="CategoriesSelector"
           value={category}
           label="Category"
           color="secondary"

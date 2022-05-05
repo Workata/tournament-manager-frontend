@@ -82,7 +82,7 @@ export default function Participants() {
           rows={rows}
           columns={columns}
           pageSize={15}
-          rowsPerPageOptions={[5]}
+          rowsPerPageOptions={[15]}
           checkboxSelection
           disableSelectionOnClick
         />
