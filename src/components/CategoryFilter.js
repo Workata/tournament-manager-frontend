@@ -17,9 +17,6 @@ export default function CategoryFilter() {
   const [category, setCategory] = useState('');     // * current selected category
   const [categories, setCategories] = useState(); // * all categories
 
-  const handleChange = (event) => {
-    setCategory(event.target.value);
-  };
 
   useEffect(() => {
     getCategories((res) => {
@@ -50,7 +47,7 @@ export default function CategoryFilter() {
           value={category}
           label="Category"
           color="secondary"
-          onChange={handleChange}
+          onChange={(event) => setCategory(event.target.value)}
         >
           {
             categories && categories.map((category) => {

@@ -10,23 +10,23 @@ import {
 import { DataGrid } from '@mui/x-data-grid';
 
 // * services
-import { createCategory, getCategories } from "../services/categoryService";
+import { createClub, getClubs } from "../services/clubService";
 
 //  * models
-import { Category } from "../models/Category";
+import { Club } from "../models/Club";
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 90 },
   {
     field: 'name',
     headerName: 'Name',
-    width: 150,
+    width: 220,
     editable: false,
   },
   {
-    field: 'description',
-    headerName: 'Description',
-    width: 250,
+    field: 'ceo',
+    headerName: 'CEO',
+    width: 180,
     editable: false,
   }
 ];
@@ -35,17 +35,17 @@ export default function Categories() {
 
   // * states needed to craete a new cateogry
   const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const [ceo, setCeo] = useState('');
 
-  // * state for all categories from the DB
-  const [categories, setCategories] = useState();
+  // * state for all clubs from the DB
+  const [clubs, setClubs] = useState();
 
-  const fetchCategories = () => {
-    getCategories((res) => {
-      let categoriesObjects = res.data.map(
-        (categoryJson) => new Category(categoryJson)
+  const fetchClubs = () => {
+    getClubs((res) => {
+      let clubsObjects = res.data.map(
+        (clubJson) => new Club(clubJson)
       );
-      setCategories(categoriesObjects);
+      setClubs(clubsObjects);
     }, (err) => {
       console.log(err);
     });
@@ -53,24 +53,24 @@ export default function Categories() {
 
   const handleSubmit = () => {
     // TODO data valdiation
-    let body = {name: name, description: description}
+    let body = {name: name, ceo: ceo}
 
-    createCategory(body, (res) => {
+    createClub(body, (res) => {
       console.log(res);
 
       // * clean up fields
       setName("");
-      setDescription("");
+      setCeo("");
 
-      // * fetch categories again to have updated list
-      fetchCategories();
+      // * fetch clubs again to have updated list
+      fetchClubs();
     }, (err) => {
       console.log(err);
     });
   }
 
   useEffect(() => {
-    fetchCategories();
+    fetchClubs();
   }, []);
 
   return (
@@ -87,7 +87,7 @@ export default function Categories() {
           textAlign: 'center'
         }}
       >
-        Manage Categories
+        Manage Clubs
       </Typography>
 
       <Box
@@ -107,7 +107,7 @@ export default function Categories() {
           }}
         >
           <DataGrid
-            rows={categories}
+            rows={clubs}
             columns={columns}
             pageSize={15}
             rowsPerPageOptions={[5]}
@@ -129,7 +129,7 @@ export default function Categories() {
           }}
         >
           <Typography variant="h5" sx={{ textAlign: 'center', marginTop: '20px'}}>
-            Create a category
+            Create a club
           </Typography>
 
           <TextField
@@ -142,10 +142,10 @@ export default function Categories() {
 
           <TextField
             sx={{width: '300px', marginLeft: 'auto', marginRight: 'auto', marginTop: "40px"}}
-            label="Description"
+            label="CEO"
             type="text"
             color="secondary"
-            onChange={ (event) => { setDescription(event.target.value)} }
+            onChange={ (event) => { setCeo(event.target.value)} }
           />
 
         <Button

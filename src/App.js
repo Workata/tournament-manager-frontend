@@ -20,6 +20,7 @@ import AddParticipants from "./pages/AddParticipants";
 import Standings from "./pages/Standings";
 import TournamentInfo from "./pages/TournamentInfo";
 import Categories from "./pages/Categories";
+import Clubs from "./pages/Clubs";
 
 // * utils
 import {handleAxios} from "./utils/ConfigHandler";
@@ -100,6 +101,7 @@ function App() {
             <Route exact path="/standings" element={<Standings/>} />
             <Route exact path="/tournamentInfo" element={<TournamentInfo/>} />
             <Route exact path="/categories" element={<Categories/>} />
+            <Route exact path="/clubs" element={<Clubs/>} />
           </Routes>
         </Main>
 
