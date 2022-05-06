@@ -12,3 +12,16 @@ export const getVerificationCodes = (callback, errorcallback) => {
    }
   })
 }
+
+export const verifyCode = (body, callback, errorcallback) => {
+  axios.post('/verifycode/', body).then( res => {
+    if(callback != null){
+      callback(res);
+    }
+  }
+  ).catch( err => {
+    if(errorcallback != null){
+      errorcallback(err);
+   }
+  })
+}

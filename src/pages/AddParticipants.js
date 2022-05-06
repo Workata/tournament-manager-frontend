@@ -20,7 +20,7 @@ import ParticipantForm from "../components/ParticipantForm";
 
 // * services
 import { getClubs } from "../services/clubService";
-import { getVerificationCodes } from "../services/verificationCodeService";
+import { verifyCode } from "../services/verificationCodeService";
 import { createParticipant } from "../services/participantService";
 
 //  * models
@@ -55,22 +55,12 @@ export default function AddParticipants() {
     );
   }
 
-  const validateVerificationCode = (verificationCode) => {
-    // TODO change this for proper validation endpoint
-    getVerificationCodes( (res) => {
-      res.data.forEach( codeData => {
-        console.log(codeData.code);
-        console.log(verificationCode);
-        if(String(codeData.code) == String(verificationCode)) return codeData.id;
-      });
-      return null;
-    })
-  }
+
 
   const handleSubmit = () => {
     // TODO data valdiation and change verification code valdiation
-    let verificationCodeId = validateVerificationCode(verificationCode);
-    if(verificationCodeId) {
+    verifyCode({code: verificationCode}, (res) => {
+      console.log(res);
       for(var formId in allForms){
         let currentForm = allForms[formId];
         let body = {
@@ -79,7 +69,7 @@ export default function AddParticipants() {
           gender: currentForm['gender'],
           date_of_birth: Moment(currentForm['dateOfBirth']).format("YYYY-MM-DD"),
           club: club,
-          verification_code: verificationCodeId,
+          verification_code: res.data.id,
           category: currentForm['category']
         }
         createParticipant(body, (res) => {
@@ -88,17 +78,9 @@ export default function AddParticipants() {
           console.log(err);
         })
       }
-    } else {
-      console.log("There is no such code in the DB.")
-    }
-    // console.log("Verification code:")
-    // console.log(verificationCode)
-
-    // console.log("Club")
-    // console.log(club)
-
-    // console.log("Forms:")
-    // console.log(allForms)
+    }, (err) => {
+      console.log(err);
+    })
   }
 
   useEffect(() => {
