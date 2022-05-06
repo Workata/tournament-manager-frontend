@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const getCategories = async (callback, errorcallback) => {
-  axios.get('/categories/').then( res => {
+export const getClubs = async (callback, errorcallback) => {
+  axios.get('/clubs/').then( res => {
     if(callback != null){
       callback(res);
     }
@@ -13,8 +13,8 @@ export const getCategories = async (callback, errorcallback) => {
   })
 }
 
-export const createCategory = async (body, callback, errorcallback) => {
-  axios.post('/categories/',
+export const createClub = async (body, callback, errorcallback) => {
+  axios.post('/clubs/',
     body
   ).then( res => {
     if(callback != null){

@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from 'react'
 // * material UI
 import {
   AppBar,
   Toolbar,
   IconButton,
   Typography,
-  Box
+  Box,
+  Button
 } from "@mui/material";
 
 import "../css/general.css";
@@ -18,13 +19,12 @@ import PropTypes from 'prop-types';
 import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
 import SportsKabaddiIcon from '@mui/icons-material/SportsKabaddi';
-// import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
+import { AppContext } from './../contexts/AppContext'
 
-// const tokenValue = false;     // TODO change this later on
-// const currentURL = useLocation();
 
 export default function Appbar(props) {
+  const { deleteTokenCookie, tokenValue, setTokenValue } = useContext(AppContext);
 
   const handleDrawerOpen = () => {
     props.setOpenDrawer(true);
@@ -88,23 +88,39 @@ export default function Appbar(props) {
             />
           </Link>
 
-          {/* Sing in buttton */}
-          <IconButton onClick={handleOpenSignIn}>
-            <PersonIcon
-              sx={{
-                marginRight: '5px',
-                color: 'primary.main',
-              }}
-            />
-              <Typography
-                variant="h6"
+          {/* Sign in / logout */}
+          {
+            !tokenValue ? (
+            <IconButton onClick={handleOpenSignIn}>
+              <PersonIcon
                 sx={{
-                color: 'primary.main'
+                  marginRight: '5px',
+                  color: 'primary.main',
+                }}
+              />
+                <Typography
+                  variant="h6"
+                  sx={{
+                  color: 'primary.main'
+                  }}
+                >
+                Sign in
+              </Typography>
+            </IconButton>
+          ) : (
+            <Link to="/" id="adminButtonLink" style={{'color': 'white'}} className="link">
+              <Button
+                color="inherit"
+                onClick={() => {
+                  setTokenValue() // set Token value for undefined
+                  deleteTokenCookie('token', '/')
                 }}
               >
-              Sign in
-            </Typography>
-          </IconButton>
+                Logout
+              </Button>
+            </Link>
+          )
+        }
         </Toolbar>
       </AppBar>
     </Box>

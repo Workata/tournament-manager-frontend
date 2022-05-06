@@ -1,14 +1,18 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
 // * material UI
 import {
   Box,
 } from "@mui/material";
 
-// * icons
 import { DataGrid } from '@mui/x-data-grid';
-
 import CategoryFilter from '../components/CategoryFilter';
+
+// * services
+import { getParticipants } from "../services/participantService";
+
+//  * models
+import { Participant } from "../models/Participant";
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 90 },
@@ -25,8 +29,8 @@ const columns = [
     editable: false,
   },
   {
-    field: 'age',
-    headerName: 'Age',
+    field: 'dateOfBirth',
+    headerName: 'Date of birth',
     type: 'number',
     width: 110,
     editable: false,
@@ -51,21 +55,38 @@ const columns = [
     sortable: true,
     width: 250,
   },
-];
-
-const rows = [
-  { id: 1, lastName: 'Kowalski', firstName: 'Jan', age: 35, club: 'WKS Śląsk Wrocław', country: 'Poland', gender: 'Male' },
-  { id: 2, lastName: 'Nowak', firstName: 'Alisa', age: 25, club: 'Śląsk Wrocław Koszykarski', country: 'Poland', gender: 'Female' },
-  { id: 3, lastName: 'Malinowski', firstName: 'Jakub', age: 18, club: 'Betard Sparta Wrocław', country: 'Poland', gender: 'Male' },
-  { id: 4, lastName: 'Zielińska', firstName: 'Dorota', age: 21, club: 'Panthers Wrocławw', country: 'Poland', gender: 'Female' },
-  { id: 5, lastName: 'Krawczyk', firstName: 'Bruno', age: 27, club: 'Polonia Wrocław', country: 'Poland', gender: 'Male' },
-  { id: 6, lastName: 'Maciejewska', firstName: 'Julia', age: 24, club: 'Gwardia Wrocław', country: 'Poland', gender: 'Female' },
-  { id: 7, lastName: 'Pawlak', firstName: 'Franciszek', age: 25, club: 'Klub Kendo RyuShinKai', country: 'Poland', gender: 'Male' },
-  { id: 8, lastName: 'Zalewska', firstName: 'Izabela', age: 29, club: 'Klub Sportowy Gym-Fight', country: 'Poland', gender: 'Female' },
-  { id: 9, lastName: 'Ostrowski', firstName: 'Mateusz', age: 22, club: 'UKS Żeglarz', country: 'Poland', gender: 'Male' },
+  {
+    field: 'category',
+    headerName: 'Category',
+    description: 'Category',
+    sortable: true,
+    width: 250,
+  },
 ];
 
 export default function Participants() {
+
+  const [participants, setParticipants] = useState();
+
+  useEffect(() => {
+    getParticipants((res) => {
+      let participantsObjects = res.data.map(
+        (participantJson) => new Participant(participantJson)
+      );
+
+      // * modify participants to fit rows
+      participantsObjects.forEach(
+        (participantObject) => {
+          participantObject.club = participantObject.club.name
+          participantObject.category = participantObject.category.name
+        }
+      );
+
+      setParticipants(participantsObjects);
+    }, (err) => {
+      console.log(err);
+    });
+  }, []);
 
   return (
     <>
@@ -81,10 +102,10 @@ export default function Participants() {
         }}
       >
         <DataGrid
-          rows={rows}
+          rows={participants}
           columns={columns}
           pageSize={15}
-          rowsPerPageOptions={[5]}
+          rowsPerPageOptions={[15]}
           checkboxSelection
           disableSelectionOnClick
         />

@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-export const getAccessToken = (body, callback, errorcallback) => {
-  axios.post('/token/',
-    body
-  ).then( res => {
+export const getTournament = (callback, errorcallback) => {
+  axios.get('/tournaments/1/').then( res => {
     if(callback != null){
       callback(res);
     }
