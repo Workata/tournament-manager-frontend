@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // * material UI
 import {
   Box,
   TextField,
   Button,
-  IconButton
+  IconButton,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
 } from "@mui/material";
 
 // * icons
@@ -14,36 +18,102 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 // * components
 import ParticipantForm from "../components/ParticipantForm";
 
-// import uniqid from 'uniqid';
+// * services
+import { getClubs } from "../services/clubService";
+import { getVerificationCodes } from "../services/verificationCodeService";
+import { createParticipant } from "../services/participantService";
+
+//  * models
+import { Club } from "../models/Club";
+
+import Moment from "moment";
+
 
 export default function AddParticipants() {
-  const [participantsForms, setParticipantsForms] = useState([<ParticipantForm key={1} formId={1}/>]);
+  const [allForms, setAllForms] = useState({});
+
+  const [participantsForms, setParticipantsForms] = useState([<ParticipantForm key={1} formId={1}
+   allForms={allForms} setAllForms={setAllForms}/>]);
+
+  const [verificationCode, setVerificationCode] = useState('');
+
+  const [club, setClub] = useState('');   // * currently selected club
+  const [clubs, setClubs] = useState();   // * all clubs
 
 
   const handleAddForm = () => {
-    // console.log("Handle add form triggered");
-
     setParticipantsForms(participantsForms => (
         [...participantsForms,
           <ParticipantForm
             key={participantsForms.length + 1}
             formId={participantsForms.length + 1}
+            allForms={allForms}
+            setAllForms={setAllForms}
           />
         ]
       )
     );
+  }
 
-    console.log(participantsForms);
-
+  const validateVerificationCode = (verificationCode) => {
+    // TODO change this for proper validation endpoint
+    getVerificationCodes( (res) => {
+      res.data.forEach( codeData => {
+        console.log(codeData.code);
+        console.log(verificationCode);
+        if(String(codeData.code) == String(verificationCode)) return codeData.id;
+      });
+      return null;
+    })
   }
 
   const handleSubmit = () => {
-    console.log("Submit forms:")
-    console.log(participantsForms)
+    // TODO data valdiation and change verification code valdiation
+    let verificationCodeId = validateVerificationCode(verificationCode);
+    if(verificationCodeId) {
+      for(var formId in allForms){
+        let currentForm = allForms[formId];
+        let body = {
+          first_name: currentForm['firstName'],
+          last_name:currentForm['lastName'],
+          gender: currentForm['gender'],
+          date_of_birth: Moment(currentForm['dateOfBirth']).format("YYYY-MM-DD"),
+          club: club,
+          verification_code: verificationCodeId,
+          category: currentForm['category']
+        }
+        createParticipant(body, (res) => {
+          console.log(res);
+        }, (err) => {
+          console.log(err);
+        })
+      }
+    } else {
+      console.log("There is no such code in the DB.")
+    }
+    // console.log("Verification code:")
+    // console.log(verificationCode)
+
+    // console.log("Club")
+    // console.log(club)
+
+    // console.log("Forms:")
+    // console.log(allForms)
   }
 
+  useEffect(() => {
+    // * fetch Clubs
+    getClubs((res) => {
+      let clubsObjects = res.data.map(
+        (clubJson) => new Club(clubJson)
+      );
+      setClubs(clubsObjects);
+    }, (err) => {
+      console.log(err);
+    });
+  }, [])
+
   return (
-    // Main container
     <Box
       sx={{
         width: '100%',
@@ -68,15 +138,29 @@ export default function AddParticipants() {
           label="Verification code"
           type="text"
           color="secondary"
+          onChange={(event) => setVerificationCode(event.target.value)}
         />
 
-        <TextField
-          sx={{marginLeft: '15px', width: '250px'}}
-          autoComplete="new-password"
-          label="Club"
-          type="text"
-          color="secondary"
-        />
+        <FormControl sx={{marginLeft: '15px', width: '250px'}}>
+          <InputLabel id="clubFilter" color='secondary' sx={{color: 'secondary.main'}}>Club</InputLabel>
+
+          <Select
+            labelId="clubFilter"
+            id="ClubsSelector"
+            value={club}
+            label="Club"
+            color="secondary"
+            onChange={(event) => setClub(event.target.value)}
+          >
+            {
+              clubs && clubs.map((club) => {
+                return(
+                  <MenuItem key={club.id} value={parseInt(club.id)}>{club.name}</MenuItem>
+                )
+              })
+            }
+          </Select>
+        </FormControl>
 
         <Button
           sx = {{

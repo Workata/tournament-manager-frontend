@@ -25,11 +25,28 @@ import { Category } from "../models/Category";
 
 export default function ParticipantForm(props) {
 
-  const [dateOfBirth, setDateOfBirth] = useState('');
-  const [gender, setGender] = useState('');
+  // TODO code refactor
 
+  // eslint-disable-next-line no-unused-vars
+  const [firstName, setFirstName] = useState('');
+  // eslint-disable-next-line no-unused-vars
+  const [lastName, setLastName] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  // eslint-disable-next-line no-unused-vars
+  const [country, setCountry] = useState('');
+
+  // Selection fields
+  const [gender, setGender] = useState('');
   const [category, setCategory] = useState('');     // * current selected category
   const [categories, setCategories] = useState();   // * all categories
+
+  const handleFieldChange = (fieldName, fieldValue) =>{
+    let tempAllForms = props.allForms;
+    if (!tempAllForms[props.formId]) tempAllForms[props.formId] = {};
+    tempAllForms[props.formId][fieldName] = fieldValue;
+
+    props.setAllForms(tempAllForms);
+  }
 
   useEffect(() => {
     getCategories((res) => {
@@ -66,6 +83,11 @@ export default function ParticipantForm(props) {
           autoComplete="new-password"
           type="text"
           color="secondary"
+          onChange={(event) => {
+            let value = event.target.value;
+            setFirstName(value);
+            handleFieldChange("firstName", value)
+          }}
         />
 
         <TextField
@@ -73,6 +95,11 @@ export default function ParticipantForm(props) {
           label="Last name"
           type="text"
           color="secondary"
+          onChange={(event) => {
+            let value = event.target.value;
+            setLastName(value);
+            handleFieldChange("lastName", value)
+          }}
         />
 
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -80,7 +107,10 @@ export default function ParticipantForm(props) {
             label="Date of birth"
             inputFormat="dd/MM/yyyy"
             value={dateOfBirth || null}
-            onChange={(newDateOfBirth) => {setDateOfBirth(newDateOfBirth)}}
+            onChange={(newDateOfBirth) => {
+              setDateOfBirth(newDateOfBirth);
+              handleFieldChange("dateOfBirth", newDateOfBirth)
+            }}
             renderInput={
               (params) => <TextField {...params}
                 sx={{
@@ -103,6 +133,11 @@ export default function ParticipantForm(props) {
           color="secondary"
           // * tun off autocomplete
           autoComplete="new-password"
+          onChange={(event) => {
+            let value = event.target.value;
+            setCountry(value);
+            handleFieldChange("country", value)
+          }}
         />
 
         <FormControl sx={{color: 'secondary', marginTop: '15px'}} >
@@ -111,11 +146,15 @@ export default function ParticipantForm(props) {
             labelId="genderSelectLabel"
             value={gender}
             label="Gender"
-            onChange={(event) => {setGender(event.target.value)}}
+            onChange={(event) => {
+              let value = event.target.value;
+              setGender(value);
+              handleFieldChange("gender", value)
+            }}
             color='secondary'
           >
-            <MenuItem value={1}>Female</MenuItem>
-            <MenuItem value={2}>Male</MenuItem>
+            <MenuItem value={'F'}>Female</MenuItem>
+            <MenuItem value={'M'}>Male</MenuItem>
           </Select>
         </FormControl>
 
@@ -128,7 +167,11 @@ export default function ParticipantForm(props) {
             value={category}
             label="Category"
             color="secondary"
-            onChange={(event) => setCategory(event.target.value)}
+            onChange={(event) => {
+              let value = event.target.value;
+              setCategory(value);
+              handleFieldChange("category", value)
+            }}
           >
             {
               categories && categories.map((category) => {
@@ -149,4 +192,6 @@ export default function ParticipantForm(props) {
 // TODO define correct prop types
 ParticipantForm.propTypes = {
   formId: PropTypes.any,
+  allForms: PropTypes.any,
+  setAllForms: PropTypes.any
 }
