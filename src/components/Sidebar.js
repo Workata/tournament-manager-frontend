@@ -11,10 +11,10 @@ import { styled, useTheme } from '@mui/material/styles';
 
 // * others
 import PropTypes from 'prop-types';
-import React from "react";
+import React, {useContext} from "react";
 
 // * navigation
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 // * icons
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -27,6 +27,7 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import GroupIcon from '@mui/icons-material/Group';
 import AccessibilityIcon from '@mui/icons-material/Accessibility';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
+import { AppContext } from '../contexts/AppContext';
 
 // * Documentation: https://mui.com/components/drawers/#persistent-drawer
 
@@ -35,6 +36,7 @@ export default function Sidebar(props) {
 
   const theme = useTheme();
   let navigate = useNavigate();
+  const { tokenValue } = useContext(AppContext)
 
   const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -110,12 +112,14 @@ export default function Sidebar(props) {
           <ListItemText primary={"Add participants"} />
         </ListItem>
 
+        {tokenValue &&
         <ListItem button onClick={ () => {return navigate("/categories")} }>
           <ListItemIcon>
             <AccessibilityIcon/>
           </ListItemIcon>
           <ListItemText primary={"Categories"} />
         </ListItem>
+        }
 
         <ListItem button onClick={ () => {return navigate("/clubs")} }>
           <ListItemIcon>

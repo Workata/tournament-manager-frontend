@@ -100,7 +100,9 @@ function App() {
             <Route exact path="/addParticipants" element={<AddParticipants />} />
             <Route exact path="/standings" element={<Standings/>} />
             <Route exact path="/tournamentInfo" element={<TournamentInfo/>} />
-            <Route exact path="/categories" element={<Categories/>} />
+            {tokenValue &&
+              <Route exact path="/categories" element={<Categories/>} />
+            }
             <Route exact path="/clubs" element={<Clubs/>} />
           </Routes>
         </Main>
