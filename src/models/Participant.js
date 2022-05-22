@@ -5,7 +5,7 @@ export class Participant {
     this.firstName = first_name;
     this.lastName = last_name;
     this.gender = gender;
-    this.dateOfBirth = date_of_birth;
+    this.dateOfBirth = new Date(date_of_birth);
     this.club = club;
     this.verificationCode = verification_code;
     this.category = category;

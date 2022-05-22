@@ -11,6 +11,9 @@ const mainTheme = createTheme({
     },
     secondary: {
       main: '#000000'       // black
+    },
+    delete: {
+      main: '#af0000'
     }
   }
 })
