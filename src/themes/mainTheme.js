@@ -11,6 +11,10 @@ const mainTheme = createTheme({
     },
     secondary: {
       main: '#000000'       // black
+    },
+    button: {
+      main: '#0097b8',
+      contrastText: '#ffffff'
     }
   }
 })

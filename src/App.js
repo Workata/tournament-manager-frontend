@@ -21,6 +21,7 @@ import Standings from "./pages/Standings";
 import TournamentInfo from "./pages/TournamentInfo";
 import Categories from "./pages/Categories";
 import Clubs from "./pages/Clubs";
+import PageNotFound from "./pages/PageNotFound";
 
 // * utils
 import {handleAxios} from "./utils/ConfigHandler";
@@ -104,6 +105,7 @@ function App() {
               <Route exact path="/categories" element={<Categories/>} />
             }
             <Route exact path="/clubs" element={<Clubs/>} />
+            <Route path="*" element={<PageNotFound/>} />
           </Routes>
         </Main>
 
@@ -112,7 +114,6 @@ function App() {
           drawerWidth={drawerWidth}
         />
       </Box>
-
     </Router>
   );
   }
