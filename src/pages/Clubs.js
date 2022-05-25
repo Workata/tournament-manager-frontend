@@ -28,14 +28,22 @@ const columns = [
     headerName: 'CEO',
     width: 180,
     editable: false,
+  },
+  {
+    field: 'email',
+    headerName: 'E-mail',
+    width: 220,
+    editable: false,
   }
 ];
 
-export default function Categories() {
+export default function Clubs() {
 
-  // * states needed to craete a new cateogry
+  // * states needed to craete a new club
   const [name, setName] = useState('');
   const [ceo, setCeo] = useState('');
+  const [email, setEmail] = useState('');
+
 
   // * state for all clubs from the DB
   const [clubs, setClubs] = useState();
@@ -53,7 +61,7 @@ export default function Categories() {
 
   const handleSubmit = () => {
     // TODO data valdiation
-    let body = {name: name, ceo: ceo}
+    let body = {name: name, ceo: ceo, email: email}
 
     createClub(body, (res) => {
       console.log(res);
@@ -61,6 +69,7 @@ export default function Categories() {
       // * clean up fields
       setName("");
       setCeo("");
+      setEmail("");
 
       // * fetch clubs again to have updated list
       fetchClubs();
@@ -99,7 +108,7 @@ export default function Categories() {
       >
         <Box
           sx={{
-            width: '600px',
+            width: '800px',
             height: '600px',
             backgroundColor: 'primary.main',
             boxShadow: "8px 8px 24px 0px rgba(66, 68, 90, 1)",
@@ -120,7 +129,7 @@ export default function Categories() {
         <Box
           sx={{
             width: '600px',
-            height: '400px',
+            height: '450px',
             backgroundColor: 'primary.main',
             boxShadow: "8px 8px 24px 0px rgba(66, 68, 90, 1)",
             marginTop: "50px",
@@ -141,11 +150,19 @@ export default function Categories() {
           />
 
           <TextField
-            sx={{width: '300px', marginLeft: 'auto', marginRight: 'auto', marginTop: "40px"}}
+            sx={{width: '300px', marginLeft: 'auto', marginRight: 'auto', marginTop: "35px"}}
             label="CEO"
             type="text"
             color="secondary"
             onChange={ (event) => { setCeo(event.target.value)} }
+          />
+
+          <TextField
+            sx={{width: '300px', marginLeft: 'auto', marginRight: 'auto', marginTop: "35px"}}
+            label="Email"
+            type="text"
+            color="secondary"
+            onChange={ (event) => { setEmail(event.target.value)} }
           />
 
         <Button

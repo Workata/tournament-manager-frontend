@@ -27,6 +27,8 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import GroupIcon from '@mui/icons-material/Group';
 import AccessibilityIcon from '@mui/icons-material/Accessibility';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
+import MailIcon from '@mui/icons-material/Mail';
+
 import { AppContext } from '../contexts/AppContext';
 
 // * Documentation: https://mui.com/components/drawers/#persistent-drawer
@@ -126,6 +128,13 @@ export default function Sidebar(props) {
             <WorkspacesIcon/>
           </ListItemIcon>
           <ListItemText primary={"Clubs"} />
+        </ListItem>
+
+        <ListItem button onClick={ () => {return navigate("/invitations")} }>
+          <ListItemIcon>
+            <MailIcon/>
+          </ListItemIcon>
+          <ListItemText primary={"Invitations"} />
         </ListItem>
 
       </List>

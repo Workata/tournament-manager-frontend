@@ -21,6 +21,7 @@ import Standings from "./pages/Standings";
 import TournamentInfo from "./pages/TournamentInfo";
 import Categories from "./pages/Categories";
 import Clubs from "./pages/Clubs";
+import Invitations from "./pages/Invitations";
 import PageNotFound from "./pages/PageNotFound";
 
 // * utils
@@ -105,6 +106,7 @@ function App() {
               <Route exact path="/categories" element={<Categories/>} />
             }
             <Route exact path="/clubs" element={<Clubs/>} />
+            <Route exact path="/invitations" element={<Invitations/>} />
             <Route path="*" element={<PageNotFound/>} />
           </Routes>
         </Main>
