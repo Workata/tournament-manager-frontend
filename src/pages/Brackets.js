@@ -28,26 +28,42 @@ const useCenteredTree = (defaultTranslate = { x: 0, y: 0 }) => {
   return [dimensions, translate, containerRef];
 };
 
-const rectWidth = 130;
+// * Tree settings
+const rectWidth = 180;
+const rectHeight = 35;
+const textStroke = 0.5;
+const textRectHorizontallMargin = 5;
+const textRectVerticallMargin = 5;  // ! depends from the font size
+
 
 // Here we're using `renderCustomNodeElement` to represent each node
 // as an SVG `rect` instead of the default `circle`.
 const renderRectSvgNode = ({ nodeDatum, toggleNode }) => (
   <g>
+    <rect
+      width={rectWidth}
+      height={rectHeight}
+      x={(rectWidth/2)*(-1)}    // ?
+      y={(rectHeight/2)*(-1)}   // ok
+      onClick={toggleNode}
+      fill="white"
+    />
 
-    <rect width={rectWidth} height="30" x={rectWidth-180} y="-10" onClick={toggleNode} fill="white"/>
-
-    <text fill="black" strokeWidth="1" x={rectWidth-170} y="10">
+    <text
+      fill="black"
+      strokeWidth={textStroke}
+      x={(rectWidth/2)*(-1) + textRectHorizontallMargin} // ok
+      y={(rectHeight/2) - (rectHeight/2) + textRectVerticallMargin} // ok
+    >
       {nodeDatum.name}
     </text>
 
     {/* Additonal info */}
-    {nodeDatum.attributes?.department && (
+    {/* {nodeDatum.attributes?.department && (
       <text fill="black" x="20" y="20" strokeWidth="1">
         Department: {nodeDatum.attributes?.department}
       </text>
-    )}
-
+    )} */}
   </g>
 );
 
