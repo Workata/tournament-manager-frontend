@@ -6,6 +6,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
+import PropTypes from 'prop-types';
+
 // * services
 import { getCategories } from "../services/categoryService";
 
@@ -13,7 +15,7 @@ import { getCategories } from "../services/categoryService";
 import { Category } from "../models/Category";
 
 
-export default function CategoryFilter() {
+export default function CategoryFilter(props) {
   const [category, setCategory] = useState('');     // * current selected category
   const [categories, setCategories] = useState(); // * all categories
 
@@ -47,7 +49,11 @@ export default function CategoryFilter() {
           value={category}
           label="Category"
           color="secondary"
-          onChange={(event) => setCategory(event.target.value)}
+          onChange={(event) => {
+            setCategory(event.target.value);
+            // pass category id to parent
+            props.setChoosenCategoryId(event.target.value);
+          }}
         >
           {
             categories && categories.map((category) => {
@@ -75,4 +81,9 @@ export default function CategoryFilter() {
 
     </Box>
   )
+}
+
+// TODO define correct prop types
+CategoryFilter.propTypes = {
+  setChoosenCategoryId: PropTypes.any
 }
