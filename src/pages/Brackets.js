@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
 import Tree from "react-d3-tree";
-// import competitors from "../data/competitors.json";
 import { useCallback, useState } from "react";
 import CategoryFilter from '../components/CategoryFilter';
 
@@ -12,6 +11,7 @@ import {
 
 // * services
 import { getTree } from "../services/treeService";
+import { setDuelWinner } from "../services/duelService";
 
 const useCenteredTree = (defaultTranslate = { x: 0, y: 0 }) => {
   const [translate, setTranslate] = useState(defaultTranslate);
@@ -28,50 +28,51 @@ const useCenteredTree = (defaultTranslate = { x: 0, y: 0 }) => {
   return [dimensions, translate, containerRef];
 };
 
-// * Tree settings
-const rectWidth = 180;
-const rectHeight = 35;
-const textStroke = 0.5;
-const textRectHorizontallMargin = 5;
-const textRectVerticallMargin = 5;  // ! depends from the font size
 
-
-// Here we're using `renderCustomNodeElement` to represent each node
-// as an SVG `rect` instead of the default `circle`.
-const renderRectSvgNode = ({ nodeDatum, toggleNode }) => (
-  <g>
-    <rect
-      width={rectWidth}
-      height={rectHeight}
-      x={(rectWidth/2)*(-1)}    // ?
-      y={(rectHeight/2)*(-1)}   // ok
-      onClick={toggleNode}
-      fill="white"
-    />
-
-    <text
-      fill="black"
-      strokeWidth={textStroke}
-      x={(rectWidth/2)*(-1) + textRectHorizontallMargin} // ok
-      y={(rectHeight/2) - (rectHeight/2) + textRectVerticallMargin} // ok
-    >
-      {nodeDatum.name}
-    </text>
-
-    {/* Additonal info */}
-    {/* {nodeDatum.attributes?.department && (
-      <text fill="black" x="20" y="20" strokeWidth="1">
-        Department: {nodeDatum.attributes?.department}
-      </text>
-    )} */}
-  </g>
-);
 
 export default function Brackets() {
 
   const [dimensions, translate, containerRef] = useCenteredTree();
   const [choosenCategoryId, setChoosenCategoryId] = useState();
   const [treeStructure, setTreeStructure] = useState();
+
+    // * Tree settings
+  const rectWidth = 180;
+  const rectHeight = 35;
+  const textStroke = 0.5;
+  const textRectHorizontallMargin = 5;
+  const textRectVerticallMargin = 5;  // ! depends from the font size
+
+
+  // Here we're using `renderCustomNodeElement` to represent each node
+  // as an SVG `rect` instead of the default `circle`.
+  // eslint-disable-next-line no-unused-vars
+  const renderRectSvgNode = ({ nodeDatum, toggleNode }) => (
+    <g>
+      <rect
+        width={rectWidth}
+        height={rectHeight}
+        x={(rectWidth/2)*(-1)}    // ?
+        y={(rectHeight/2)*(-1)}   // ok
+        onClick={()=> {
+          console.log(nodeDatum);
+          setDuelWinner(nodeDatum.participant_id, (res) => console.log(res), (err) => console.log(err));
+          // setTreeStructure(); // * force rerender - workaround ???
+          fetchTree();
+        }}
+        fill="white"
+      />
+
+      <text
+        fill="black"
+        strokeWidth={textStroke}
+        x={(rectWidth/2)*(-1) + textRectHorizontallMargin} // ok
+        y={(rectHeight/2) - (rectHeight/2) + textRectVerticallMargin} // ok
+      >
+        {nodeDatum.name}
+      </text>
+    </g>
+  );
 
   const fetchTree = () => {
     getTree(choosenCategoryId, (res) => {
