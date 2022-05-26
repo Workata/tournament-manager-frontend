@@ -23,6 +23,7 @@ import Categories from "./pages/Categories";
 import Clubs from "./pages/Clubs";
 import Invitations from "./pages/Invitations";
 import PageNotFound from "./pages/PageNotFound";
+import ManagementPanel from "./pages/ManagementPanel";
 
 // * utils
 import {handleAxios} from "./utils/ConfigHandler";
@@ -107,6 +108,7 @@ function App() {
             }
             <Route exact path="/clubs" element={<Clubs/>} />
             <Route exact path="/invitations" element={<Invitations/>} />
+            <Route exact path="/managementPanel" element={<ManagementPanel/>} />
             <Route path="*" element={<PageNotFound/>} />
           </Routes>
         </Main>
