@@ -28,6 +28,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import AccessibilityIcon from '@mui/icons-material/Accessibility';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import MailIcon from '@mui/icons-material/Mail';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 import { AppContext } from '../contexts/AppContext';
 
@@ -142,6 +143,12 @@ export default function Sidebar(props) {
       <Divider />
 
       <List>
+      <ListItem button onClick={ () => {return navigate("/managementPanel")} }>
+          <ListItemIcon>
+            <AdminPanelSettingsIcon/>
+          </ListItemIcon>
+          <ListItemText primary={"Management panel"} />
+        </ListItem>
         <ListItem button onClick={ () => {return navigate("/tournamentInfo")} }>
           <ListItemIcon>
             <InfoIcon/>
