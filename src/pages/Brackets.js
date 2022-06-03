@@ -35,6 +35,7 @@ export default function Brackets() {
   const [dimensions, translate, containerRef] = useCenteredTree();
   const [choosenCategoryId, setChoosenCategoryId] = useState();
   const [treeStructure, setTreeStructure] = useState();
+  const [isWinnerSet, setIsWinnerSet] = useState(false);
 
     // * Tree settings
   const rectWidth = 180;
@@ -56,9 +57,7 @@ export default function Brackets() {
         y={(rectHeight/2)*(-1)}   // ok
         onClick={()=> {
           console.log(nodeDatum);
-          setDuelWinner(nodeDatum.participant_id, (res) => console.log(res), (err) => console.log(err));
-          // setTreeStructure(); // * force rerender - workaround ???
-          fetchTree();
+          setDuelWinner(nodeDatum.participant_id, (res) => {console.log(res); setIsWinnerSet(true);}, (err) => console.log(err));
         }}
         fill="white"
       />
@@ -88,6 +87,14 @@ export default function Brackets() {
       fetchTree();
     }
   }, [choosenCategoryId])
+
+  useEffect(() => {
+    console.log("EFFFFFFECT");
+    if(choosenCategoryId) { // if not null
+      fetchTree();
+    }
+    setIsWinnerSet(false);
+  }, [isWinnerSet])
 
   return (
     <>
