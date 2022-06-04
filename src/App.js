@@ -4,7 +4,7 @@ import { Box, CircularProgress } from "@mui/material";
 import { styled } from '@mui/material/styles';
 
 // * navigation
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
 // * components
 import Appbar from "./components/Appbar";
@@ -14,6 +14,9 @@ import SignIn from "./components/SignIn";
 
 // * pages
 import Home from "./pages/Home";
+import HomeViewer from "./pages/HomeViewer";
+import HomeAdmin from "./pages/HomeAdmin";
+import HomeClubCeo from "./pages/HomeClubCeo";
 import Brackets from "./pages/Brackets";
 import Participants from "./pages/Participants";
 import AddParticipants from "./pages/AddParticipants";
@@ -97,18 +100,27 @@ function App() {
 
         <Main open={openDrawer}>
           <Routes>
+            {/* Home pages */}
             <Route exact path="/" element={<Home />} />
-            <Route exact path="/brackets" element={<Brackets />} />
-            <Route exact path="/participants" element={<Participants />} />
-            <Route exact path="/addParticipants" element={<AddParticipants />} />
-            <Route exact path="/standings" element={<Standings/>} />
+            <Route exact path="/viewer" element={<HomeViewer />} />
+            <Route exact path="/admin" element={<HomeAdmin />} />
+            <Route exact path="/clubceo" element={<HomeClubCeo />} />
+
+            <Route exact path="/viewer/brackets" element={<Brackets />} />
+            <Route exact path="/viewer/participants" element={<Participants />} />
+            <Route exact path="/viewer/standings" element={<Standings/>} />
+
+            <Route exact path="/clubceo/addParticipants" element={<AddParticipants />} />
+            <Route exact path="/clubceo/clubs" element={<Clubs/>} />
+
+            <Route exact path="/admin/categories" element={<Categories/>} />
+            <Route exact path="/admin/management" element={<ManagementPanel/>} />
+            <Route exact path="/admin/invitations" element={<Invitations/>} />
+
+
             <Route exact path="/tournamentInfo" element={<TournamentInfo/>} />
-            {tokenValue &&
-              <Route exact path="/categories" element={<Categories/>} />
-            }
-            <Route exact path="/clubs" element={<Clubs/>} />
-            <Route exact path="/invitations" element={<Invitations/>} />
-            <Route exact path="/managementPanel" element={<ManagementPanel/>} />
+
+
             <Route path="*" element={<PageNotFound/>} />
           </Routes>
         </Main>

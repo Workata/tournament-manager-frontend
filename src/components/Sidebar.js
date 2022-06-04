@@ -11,7 +11,8 @@ import { styled, useTheme } from '@mui/material/styles';
 
 // * others
 import PropTypes from 'prop-types';
-import React, {useContext} from "react";
+import React from "react";
+// import React, {useContext} from "react";
 
 // * navigation
 import { useNavigate} from "react-router-dom";
@@ -30,16 +31,19 @@ import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import MailIcon from '@mui/icons-material/Mail';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
-import { AppContext } from '../contexts/AppContext';
+import { useLocation } from 'react-router-dom';
+
+// import { AppContext } from '../contexts/AppContext';
 
 // * Documentation: https://mui.com/components/drawers/#persistent-drawer
 
 
-export default function Sidebar(props) {
+export default function SidebarViewer(props) {
 
   const theme = useTheme();
+  let location = useLocation();
   let navigate = useNavigate();
-  const { tokenValue } = useContext(AppContext)
+  // const { tokenValue } = useContext(AppContext)
 
   const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -87,89 +91,100 @@ export default function Sidebar(props) {
           <ListItemText primary={"Home"} />
         </ListItem>
 
-        <ListItem button onClick={ () => {return navigate("/brackets")} }>
-          <ListItemIcon>
-            <AccountTreeIcon/>
-          </ListItemIcon>
-          <ListItemText primary={"Brackets"} />
-        </ListItem>
+        { !location.pathname.startsWith('/viewer') &&
+          !location.pathname.startsWith('/clubceo') &&
+          !location.pathname.startsWith('/admin') &&
+          <>
+            <ListItem button onClick={ () => {return navigate("/tournamentInfo")} }>
+              <ListItemIcon>
+                <InfoIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"About tournament"} />
+            </ListItem>
 
-        <ListItem button onClick={ () => {return navigate("/standings")} }>
-          <ListItemIcon>
-            <EmojiEventsIcon/>
-          </ListItemIcon>
-          <ListItemText primary={"Standings"} />
-        </ListItem>
-
-        <ListItem button onClick={ () => {return navigate("/participants")} }>
-          <ListItemIcon>
-            <GroupIcon/>
-          </ListItemIcon>
-          <ListItemText primary={"Participants"} />
-        </ListItem>
-
-        <ListItem button onClick={ () => {return navigate("/addParticipants")} }>
-          <ListItemIcon>
-            <GroupAddIcon/>
-          </ListItemIcon>
-          <ListItemText primary={"Add participants"} />
-        </ListItem>
-
-        {tokenValue &&
-        <ListItem button onClick={ () => {return navigate("/categories")} }>
-          <ListItemIcon>
-            <AccessibilityIcon/>
-          </ListItemIcon>
-          <ListItemText primary={"Categories"} />
-        </ListItem>
+            <ListItem button onClick={ () => {return navigate("/appInfo")} }>
+              <ListItemIcon>
+                <InfoIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"About application"} />
+            </ListItem>
+          </>
         }
 
-        <ListItem button onClick={ () => {return navigate("/clubs")} }>
-          <ListItemIcon>
-            <WorkspacesIcon/>
-          </ListItemIcon>
-          <ListItemText primary={"Clubs"} />
-        </ListItem>
+        { location.pathname.startsWith('/viewer') &&
+          <>
+            <ListItem button onClick={ () => {return navigate("/viewer/brackets")} }>
+              <ListItemIcon>
+                <AccountTreeIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Brackets"} />
+            </ListItem>
 
-        <ListItem button onClick={ () => {return navigate("/invitations")} }>
-          <ListItemIcon>
-            <MailIcon/>
-          </ListItemIcon>
-          <ListItemText primary={"Invitations"} />
-        </ListItem>
+            <ListItem button onClick={ () => {return navigate("/viewer/standings")} }>
+              <ListItemIcon>
+                <EmojiEventsIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Standings"} />
+            </ListItem>
 
+            <ListItem button onClick={ () => {return navigate("/viewer/participants")} }>
+              <ListItemIcon>
+                <GroupIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Participants"} />
+            </ListItem>
+          </>
+        }
+
+        { location.pathname.startsWith('/clubceo') &&
+          <>
+            <ListItem button onClick={ () => {return navigate("/clubceo/addParticipants")} }>
+              <ListItemIcon>
+                <GroupAddIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Add participants"} />
+            </ListItem>
+
+            <ListItem button onClick={ () => {return navigate("/clubceo/clubs")} }>
+              <ListItemIcon>
+                <WorkspacesIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Clubs"} />
+            </ListItem>
+          </>
+        }
+
+        { location.pathname.startsWith('/admin') &&
+          <>
+            <ListItem button onClick={ () => {return navigate("/admin/categories")} }>
+              <ListItemIcon>
+                <AccessibilityIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Categories"} />
+            </ListItem>
+
+            <ListItem button onClick={ () => {return navigate("/admin/invitations")} }>
+              <ListItemIcon>
+                <MailIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Invitations"} />
+            </ListItem>
+
+            <ListItem button onClick={ () => {return navigate("/admin/management")} }>
+              <ListItemIcon>
+                <AdminPanelSettingsIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Management"} />
+            </ListItem>
+          </>
+        }
       </List>
-
-      <Divider />
-
-      <List>
-      <ListItem button onClick={ () => {return navigate("/managementPanel")} }>
-          <ListItemIcon>
-            <AdminPanelSettingsIcon/>
-          </ListItemIcon>
-          <ListItemText primary={"Management panel"} />
-        </ListItem>
-        <ListItem button onClick={ () => {return navigate("/tournamentInfo")} }>
-          <ListItemIcon>
-            <InfoIcon/>
-          </ListItemIcon>
-          <ListItemText primary={"About tournament"} />
-        </ListItem>
-
-        <ListItem button onClick={ () => {return navigate("/appInfo")} }>
-          <ListItemIcon>
-            <InfoIcon/>
-          </ListItemIcon>
-          <ListItemText primary={"About application"} />
-        </ListItem>
-      </List>
-
     </Drawer>
   )
 }
 
 // TODO define correct prop types
-Sidebar.propTypes = {
+SidebarViewer.propTypes = {
   setOpenDrawer: PropTypes.any,
   openDrawer: PropTypes.any,
   drawerWidth: PropTypes.any
