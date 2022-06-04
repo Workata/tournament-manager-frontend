@@ -156,6 +156,13 @@ export default function SidebarViewer(props) {
 
         { location.pathname.startsWith('/admin') &&
           <>
+            <ListItem button onClick={ () => {return navigate("/admin/brackets")} }>
+              <ListItemIcon>
+                <AccountTreeIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Brackets"} />
+            </ListItem>
+
             <ListItem button onClick={ () => {return navigate("/admin/categories")} }>
               <ListItemIcon>
                 <AccessibilityIcon/>

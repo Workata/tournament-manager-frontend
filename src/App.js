@@ -17,7 +17,8 @@ import Home from "./pages/Home";
 import HomeViewer from "./pages/HomeViewer";
 import HomeAdmin from "./pages/HomeAdmin";
 import HomeClubCeo from "./pages/HomeClubCeo";
-import Brackets from "./pages/Brackets";
+import BracketsManage from "./pages/BracketsManage";
+import BracketsView from "./pages/BracketsView";
 import Participants from "./pages/Participants";
 import AddParticipants from "./pages/AddParticipants";
 import Standings from "./pages/Standings";
@@ -106,13 +107,14 @@ function App() {
             <Route exact path="/admin" element={<HomeAdmin />} />
             <Route exact path="/clubceo" element={<HomeClubCeo />} />
 
-            <Route exact path="/viewer/brackets" element={<Brackets />} />
+            <Route exact path="/viewer/brackets" element={<BracketsView />} />
             <Route exact path="/viewer/participants" element={<Participants />} />
             <Route exact path="/viewer/standings" element={<Standings/>} />
 
             <Route exact path="/clubceo/addParticipants" element={<AddParticipants />} />
             <Route exact path="/clubceo/clubs" element={<Clubs/>} />
 
+            <Route exact path="/admin/brackets" element={<BracketsManage />} />
             <Route exact path="/admin/categories" element={<Categories/>} />
             <Route exact path="/admin/management" element={<ManagementPanel/>} />
             <Route exact path="/admin/invitations" element={<Invitations/>} />
