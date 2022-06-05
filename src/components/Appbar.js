@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
 // * material UI
 import {
   AppBar,
@@ -20,7 +20,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
 import SportsKabaddiIcon from '@mui/icons-material/SportsKabaddi';
 
-import { AppContext } from './../contexts/AppContext'
+import { AppContext } from './../contexts/AppContext';
 
 
 export default function Appbar(props) {
@@ -50,6 +50,7 @@ export default function Appbar(props) {
             bgcolor: 'primary.turquoise'
           }}
         >
+
           {/* Sidebar button */}
           <IconButton
             color="inherit"

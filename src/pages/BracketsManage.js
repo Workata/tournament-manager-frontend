@@ -26,7 +26,7 @@ const useCenteredTree = (defaultTranslate = { x: 0, y: 0 }) => {
   return [dimensions, translate, containerRef];
 };
 
-export default function Brackets() {
+export default function BracketsManage() {
   const [dimensions, translate, containerRef] = useCenteredTree();
   const [choosenCategoryId, setChoosenCategoryId] = useState();
   const [treeStructure, setTreeStructure] = useState();
