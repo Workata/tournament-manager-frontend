@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from "react";
+import * as EmailValidator from 'email-validator';
 import UserFeedback from "../components/UserFeedback";
+
 // * material UI
 import {
   Box,
@@ -43,6 +45,9 @@ export default function Clubs() {
   const [name, setName] = useState('');
   const [ceo, setCeo] = useState('');
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [ceoError, setCeoError] = useState('');
   const [submitFeedback, setSubmitFeedback] = useState({open: false, severity: 'error', message: '' });
 
   // * state for all clubs from the DB
@@ -80,9 +85,43 @@ export default function Clubs() {
     });
   }
 
+  const emailValidation = () => {
+    if(EmailValidator.validate(email) || email === ''){
+        setEmailError(false);
+    }
+    else{
+      setEmailError(true);
+    }
+}
+
+const nameValidation = () => {
+  setNameError(validateText(name))
+}
+
+const ceoValidation = () => {
+  setCeoError(validateText(ceo))
+}
+
+const validateText = (validatedString) => {
+  return /\d/.test(validatedString);
+}
+
   useEffect(() => {
     fetchClubs();
   }, []);
+
+  useEffect(() => {
+    emailValidation();
+  }, [email]);
+
+  useEffect(() => {
+    nameValidation();
+  }, [name]);
+
+  useEffect(() => {
+    ceoValidation();
+  }, [ceo]);
+
 
   return (
     <Box
@@ -147,6 +186,8 @@ export default function Clubs() {
             sx={{width: '300px', marginLeft: 'auto', marginRight: 'auto', marginTop: "40px"}}
             label="Name"
             type="text"
+            error={nameError}
+            required
             color="secondary"
             onChange={ (event) => { setName(event.target.value)} }
           />
@@ -155,6 +196,8 @@ export default function Clubs() {
             sx={{width: '300px', marginLeft: 'auto', marginRight: 'auto', marginTop: "35px"}}
             label="CEO"
             type="text"
+            error={ceoError}
+            required
             color="secondary"
             onChange={ (event) => { setCeo(event.target.value)} }
           />
@@ -163,14 +206,17 @@ export default function Clubs() {
             sx={{width: '300px', marginLeft: 'auto', marginRight: 'auto', marginTop: "35px"}}
             label="Email"
             type="text"
+            required
+            error={emailError}
             color="secondary"
-            onChange={ (event) => { setEmail(event.target.value)} }
+            onChange={ (event) => {setEmail(event.target.value)} }
           />
 
         <Button
           sx={{width: '100px', height: '40px', marginLeft: 'auto', marginRight: 'auto', marginTop: "40px"}}
           variant="outlined"
           color="secondary"
+          disabled={emailError || ceoError || nameError}
           onClick={handleSubmit}
         >
           Submit
