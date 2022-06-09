@@ -81,7 +81,7 @@ export default function BracketsManage() {
       onClick={() => {
         setWinner(nodeDatum);
         console.log(nodeDatum);
-        if (nodeDatum.participant_id !== 0) {
+        if (nodeDatum.participant_id !== 0 && nodeDatum.parent_duel_id !== null) {
           setIsConfirmationOpen(true);
         }
       }}
