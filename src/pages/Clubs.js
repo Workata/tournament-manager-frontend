@@ -90,9 +90,6 @@ export default function Clubs() {
       setEmailError(true);
     }
 }
-const validateText = (validatedString) => {
-  return /\d/.test(validatedString);
-}
 
 const nameValidation = () => {
   setNameError(validateText(name))
@@ -100,6 +97,10 @@ const nameValidation = () => {
 
 const ceoValidation = () => {
   setCeoError(validateText(ceo))
+}
+
+const validateText = (validatedString) => {
+  return /\d/.test(validatedString);
 }
 
   useEffect(() => {
@@ -212,7 +213,7 @@ const ceoValidation = () => {
           sx={{width: '100px', height: '40px', marginLeft: 'auto', marginRight: 'auto', marginTop: "40px"}}
           variant="outlined"
           color="secondary"
-          required
+          disabled={emailError || ceoError || nameError}
           onClick={handleSubmit}
         >
           Submit
