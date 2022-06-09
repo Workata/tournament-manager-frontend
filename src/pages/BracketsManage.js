@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import Tree from "react-d3-tree";
 import { useCallback, useState } from "react";
 import CategoryFilter from "../components/CategoryFilter";
@@ -10,6 +10,8 @@ import { Box, Typography } from "@mui/material";
 import { getTree } from "../services/treeService";
 import { setDuelWinner } from "../services/duelService";
 import ConfirmationDialog from "../components/ConfirmationDialog";
+
+import { AppContext } from './../contexts/AppContext';
 
 import UserFeedback from "../components/UserFeedback";
 
@@ -35,6 +37,7 @@ export default function BracketsManage() {
   const [isWinnerSet, setIsWinnerSet] = useState(false);
   const [winner, setWinner] = useState(0);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const { tokenValue } = useContext(AppContext);
 
   const [submitFeedback, setSubmitFeedback] = useState({
     open: false,
@@ -52,7 +55,7 @@ export default function BracketsManage() {
   // eslint-disable-next-line no-unused-vars
   const setDuelWinnerAfterConfirm = () => {
     setDuelWinner(
-      winner.participant_id,
+      winner.participant_id, tokenValue,
       (res) => {
         console.log(res);
         setIsWinnerSet(true);

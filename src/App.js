@@ -103,22 +103,25 @@ function App() {
           <Routes>
             {/* Home pages */}
             <Route exact path="/" element={<Home />} />
-            <Route exact path="/viewer" element={<HomeViewer />} />
-            <Route exact path="/admin" element={<HomeAdmin />} />
-            <Route exact path="/clubceo" element={<HomeClubCeo />} />
 
+            <Route exact path="/viewer" element={<HomeViewer />} />
             <Route exact path="/viewer/brackets" element={<BracketsView />} />
             <Route exact path="/viewer/participants" element={<Participants />} />
             <Route exact path="/viewer/standings" element={<Standings/>} />
 
+            <Route exact path="/clubceo" element={<HomeClubCeo />} />
             <Route exact path="/clubceo/addParticipants" element={<AddParticipants />} />
             <Route exact path="/clubceo/clubs" element={<Clubs/>} />
 
-            <Route exact path="/admin/brackets" element={<BracketsManage />} />
-            <Route exact path="/admin/categories" element={<Categories/>} />
-            <Route exact path="/admin/management" element={<ManagementPanel/>} />
-            <Route exact path="/admin/invitations" element={<Invitations/>} />
-
+            {tokenValue &&
+              <>
+                <Route exact path="/admin" element={<HomeAdmin />} />
+                <Route exact path="/admin/brackets" element={<BracketsManage />} />
+                <Route exact path="/admin/categories" element={<Categories/>} />
+                <Route exact path="/admin/management" element={<ManagementPanel/>} />
+                <Route exact path="/admin/invitations" element={<Invitations/>} />
+              </>
+            }
 
             <Route exact path="/tournamentInfo" element={<TournamentInfo/>} />
 

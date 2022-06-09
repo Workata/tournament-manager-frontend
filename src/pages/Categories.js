@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 
 // * material UI
 import {
@@ -14,6 +14,8 @@ import { createCategory, getCategories } from "../services/categoryService";
 
 //  * models
 import { Category } from "../models/Category";
+
+import { AppContext } from './../contexts/AppContext';
 
 import UserFeedback from "../components/UserFeedback";
 
@@ -44,6 +46,8 @@ export default function Categories() {
 
   const [submitFeedback, setSubmitFeedback] = useState({open: false, severity: 'error', message: '' });
 
+  const { tokenValue } = useContext(AppContext);
+
   const fetchCategories = () => {
     getCategories((res) => {
       let categoriesObjects = res.data.map(
@@ -59,7 +63,7 @@ export default function Categories() {
     // TODO data valdiation
     let body = {name: name, description: description}
 
-    createCategory(body, (res) => {
+    createCategory(body, tokenValue, (res) => {
       console.log(res);
 
       // * clean up fields

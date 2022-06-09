@@ -4,20 +4,19 @@ import { Box, Typography, Button } from "@mui/material";
 // * icons
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 
-import React, {useState} from "react";
-
+import React, { useState, useContext } from "react";
 import { generateTrees } from "../services/treeService";
-
 import "../css/managementPanel.css";
-
 import UserFeedback from "../components/UserFeedback";
+import { AppContext } from './../contexts/AppContext';
 
 export default function ManagementPanel() {
 
+  const { tokenValue } = useContext(AppContext);
   const [submitFeedback, setSubmitFeedback] = useState({open: false, severity: 'error', message: '' });
 
   const handleGenerateTrees = () => {
-    generateTrees(
+    generateTrees(tokenValue,
       (res) => {
         console.log(res);
         setSubmitFeedback({open: true, severity: 'success', message: 'All brackets have been generated successfully.' });

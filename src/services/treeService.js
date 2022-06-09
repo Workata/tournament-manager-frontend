@@ -13,8 +13,15 @@ export const getTree = (categoryId, callback, errorcallback) => {
   })
 }
 
-export const generateTrees = async (callback, errorcallback) => {
-    axios.post('/generatetrees/'
+export const generateTrees = async (tokenValue, callback, errorcallback) => {
+    axios.post('/generatetrees/', {},
+    {
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenValue}`
+      }
+    }
     ).then( res => {
       if(callback != null){
         callback(res);
