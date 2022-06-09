@@ -45,6 +45,8 @@ export default function Clubs() {
   const [ceo, setCeo] = useState('');
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [ceoError, setCeoError] = useState('');
 
 
   // * state for all clubs from the DB
@@ -81,12 +83,23 @@ export default function Clubs() {
   }
 
   const emailValidation = () => {
-    if(EmailValidator.validate(email)){
+    if(EmailValidator.validate(email) || email === ''){
         setEmailError(false);
     }
     else{
       setEmailError(true);
     }
+}
+const validateText = (validatedString) => {
+  return /\d/.test(validatedString);
+}
+
+const nameValidation = () => {
+  setNameError(validateText(name))
+}
+
+const ceoValidation = () => {
+  setCeoError(validateText(ceo))
 }
 
   useEffect(() => {
@@ -96,6 +109,15 @@ export default function Clubs() {
   useEffect(() => {
     emailValidation();
   }, [email]);
+
+  useEffect(() => {
+    nameValidation();
+  }, [name]);
+
+  useEffect(() => {
+    ceoValidation();
+  }, [ceo]);
+
 
   return (
     <Box
@@ -160,6 +182,7 @@ export default function Clubs() {
             sx={{width: '300px', marginLeft: 'auto', marginRight: 'auto', marginTop: "40px"}}
             label="Name"
             type="text"
+            error={nameError}
             required
             color="secondary"
             onChange={ (event) => { setName(event.target.value)} }
@@ -169,6 +192,7 @@ export default function Clubs() {
             sx={{width: '300px', marginLeft: 'auto', marginRight: 'auto', marginTop: "35px"}}
             label="CEO"
             type="text"
+            error={ceoError}
             required
             color="secondary"
             onChange={ (event) => { setCeo(event.target.value)} }
