@@ -22,6 +22,8 @@ import { getClubs } from "../services/clubService";
 import { VerificationCodeCapacity } from "../models/VerificationCodeCapacity";
 import { Club } from "../models/Club";
 
+import UserFeedback from "../components/UserFeedback";
+
 const columns = [
   { field: 'id', headerName: 'ID', width: 90 },
   {
@@ -57,6 +59,7 @@ export default function Invitations() {
   const [clubs, setClubs] = useState('');
   const [participantsLimit, setParticipantsLimit] = useState('');
 
+  const [submitFeedback, setSubmitFeedback] = useState({open: false, severity: 'error', message: '' });
 
   // * state for all clubs from the DB
   const [verificationCodesCapacity, setVerificationCodesCapacity] = useState();
@@ -97,9 +100,10 @@ export default function Invitations() {
       // * clean up fields
       setChoosenClubId('');
       setParticipantsLimit('');
-
+      setSubmitFeedback({open: true, severity: 'success', message: 'Invitation has been sent successfully.' });
     }, (err) => {
       console.log(err);
+      setSubmitFeedback({open: true, severity: 'error', message: (err.message) });
     });
   }
 
@@ -210,6 +214,7 @@ export default function Invitations() {
 
         </Box>
       </Box>
+      <UserFeedback setFeedbackState={setSubmitFeedback} feedbackState={submitFeedback}/>
     </Box>
   );
 }
