@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-
+import UserFeedback from "../components/UserFeedback";
 // * material UI
 import {
   Box,
@@ -43,7 +43,7 @@ export default function Clubs() {
   const [name, setName] = useState('');
   const [ceo, setCeo] = useState('');
   const [email, setEmail] = useState('');
-
+  const [submitFeedback, setSubmitFeedback] = useState({open: false, severity: 'error', message: '' });
 
   // * state for all clubs from the DB
   const [clubs, setClubs] = useState();
@@ -73,8 +73,10 @@ export default function Clubs() {
 
       // * fetch clubs again to have updated list
       fetchClubs();
+      setSubmitFeedback({open: true, severity: 'success', message: 'Club has been added successfully.' });
     }, (err) => {
       console.log(err);
+      setSubmitFeedback({open: true, severity: 'error', message: (err.message) });
     });
   }
 
@@ -176,6 +178,7 @@ export default function Clubs() {
 
         </Box>
       </Box>
+      <UserFeedback setFeedbackState={setSubmitFeedback} feedbackState={submitFeedback}/>
     </Box>
   );
 }
