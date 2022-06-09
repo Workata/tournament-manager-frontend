@@ -11,6 +11,8 @@ import { getTree } from "../services/treeService";
 import { setDuelWinner } from "../services/duelService";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 
+import UserFeedback from "../components/UserFeedback";
+
 const useCenteredTree = (defaultTranslate = { x: 0, y: 0 }) => {
   const [translate, setTranslate] = useState(defaultTranslate);
   const [dimensions, setDimensions] = useState();
@@ -34,6 +36,12 @@ export default function BracketsManage() {
   const [winner, setWinner] = useState(0);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 
+  const [submitFeedback, setSubmitFeedback] = useState({
+    open: false,
+    severity: "error",
+    message: "",
+  });
+
   // * Tree settings
   const rectWidth = 180;
   const rectHeight = 35;
@@ -48,8 +56,20 @@ export default function BracketsManage() {
       (res) => {
         console.log(res);
         setIsWinnerSet(true);
+        setSubmitFeedback({
+          open: true,
+          severity: "success",
+          message: "Winner has been set successfully.",
+        });
       },
-      (err) => console.log(err)
+      (err) => {
+        console.log(err);
+        setSubmitFeedback({
+          open: true,
+          severity: "error",
+          message: err.message,
+        });
+      }
     );
   };
 
@@ -163,6 +183,10 @@ export default function BracketsManage() {
             />
           )
         )}
+        <UserFeedback
+          setFeedbackState={setSubmitFeedback}
+          feedbackState={submitFeedback}
+        />
       </Box>
     </>
   );

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import * as EmailValidator from 'email-validator';
+import UserFeedback from "../components/UserFeedback";
 
 // * material UI
 import {
@@ -47,7 +48,7 @@ export default function Clubs() {
   const [emailError, setEmailError] = useState('');
   const [nameError, setNameError] = useState('');
   const [ceoError, setCeoError] = useState('');
-
+  const [submitFeedback, setSubmitFeedback] = useState({open: false, severity: 'error', message: '' });
 
   // * state for all clubs from the DB
   const [clubs, setClubs] = useState();
@@ -77,8 +78,10 @@ export default function Clubs() {
 
       // * fetch clubs again to have updated list
       fetchClubs();
+      setSubmitFeedback({open: true, severity: 'success', message: 'Club has been added successfully.' });
     }, (err) => {
       console.log(err);
+      setSubmitFeedback({open: true, severity: 'error', message: (err.message) });
     });
   }
 
@@ -221,6 +224,7 @@ const validateText = (validatedString) => {
 
         </Box>
       </Box>
+      <UserFeedback setFeedbackState={setSubmitFeedback} feedbackState={submitFeedback}/>
     </Box>
   );
 }
