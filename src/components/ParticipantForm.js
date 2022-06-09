@@ -10,7 +10,7 @@ import {
   MenuItem,
   FormControl,
   InputLabel
- } from "@mui/material";
+} from "@mui/material";
 
 // needed for date of birth input
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
@@ -39,8 +39,11 @@ export default function ParticipantForm(props) {
   const [gender, setGender] = useState('');
   const [category, setCategory] = useState('');     // * current selected category
   const [categories, setCategories] = useState();   // * all categories
+  const [lastNameError, setLastNameError] = useState();
+  const [firstNameError, setFirstNameError] = useState();
+  const [countryError, setCountryError] = useState();
 
-  const handleFieldChange = (fieldName, fieldValue) =>{
+  const handleFieldChange = (fieldName, fieldValue) => {
     let tempAllForms = props.allForms;
     if (!tempAllForms[props.formId]) tempAllForms[props.formId] = {};
     tempAllForms[props.formId][fieldName] = fieldValue;
@@ -59,6 +62,34 @@ export default function ParticipantForm(props) {
     });
   }, [])
 
+  const validateText = (validatedString) => {
+    return /[!@#$%&*()0-9]/.test(validatedString);
+  }
+
+  const firstNameValidation = () => {
+    setFirstNameError(validateText(firstName))
+  }
+
+  useEffect(() => {
+    firstNameValidation();
+  }, [firstName]);
+
+  const lastNameValidation = () => {
+    setLastNameError(validateText(lastName))
+  }
+
+  useEffect(() => {
+    lastNameValidation();
+  }, [lastName]);
+
+  const countryValidation = () => {
+    setCountryError(validateText(country))
+  }
+
+  useEffect(() => {
+    countryValidation();
+  }, [country]);
+
   return (
     <Box
       sx={{
@@ -72,15 +103,16 @@ export default function ParticipantForm(props) {
         padding: '20px'
       }}
     >
-      <Typography variant ="h6">{props.formId}.</Typography>
+      <Typography variant="h6">{props.formId}.</Typography>
 
       <FormControl
-        sx={{color: 'secondary', width: '255px'}}
+        sx={{ color: 'secondary', width: '255px' }}
       >
         <TextField
-          sx={{marginTop: '15px'}}
+          sx={{ marginTop: '15px' }}
           label="First name"
           autoComplete="new-password"
+          error={firstNameError}
           type="text"
           color="secondary"
           onChange={(event) => {
@@ -91,8 +123,9 @@ export default function ParticipantForm(props) {
         />
 
         <TextField
-          sx={{marginTop: '15px'}}
+          sx={{ marginTop: '15px' }}
           label="Last name"
+          error={lastNameError}
           type="text"
           color="secondary"
           onChange={(event) => {
@@ -117,8 +150,8 @@ export default function ParticipantForm(props) {
                   marginTop: '15px',
                   color: 'secondary.main'
                 }}
-                color = 'secondary'
-                InputLabelProps = {{
+                color='secondary'
+                InputLabelProps={{
                   style: { color: '#000' },
                 }}
               />
@@ -127,10 +160,11 @@ export default function ParticipantForm(props) {
         </LocalizationProvider>
 
         <TextField
-          sx={{marginTop: '15px'}}
+          sx={{ marginTop: '15px' }}
           label="Country"
           type="text"
           color="secondary"
+          error={countryError}
           // * tun off autocomplete
           autoComplete="new-password"
           onChange={(event) => {
@@ -140,8 +174,8 @@ export default function ParticipantForm(props) {
           }}
         />
 
-        <FormControl sx={{color: 'secondary', marginTop: '15px'}} >
-          <InputLabel id="genderSelectLabel" color='secondary' sx={{color: 'secondary.main'}}>Gender</InputLabel>
+        <FormControl sx={{ color: 'secondary', marginTop: '15px' }} >
+          <InputLabel id="genderSelectLabel" color='secondary' sx={{ color: 'secondary.main' }}>Gender</InputLabel>
           <Select
             labelId="genderSelectLabel"
             value={gender}
@@ -158,8 +192,8 @@ export default function ParticipantForm(props) {
           </Select>
         </FormControl>
 
-        <FormControl sx={{color: 'secondary', marginTop: '15px'}}>
-          <InputLabel id="categoryFilter" color='secondary' sx={{color: 'secondary.main'}}>Category</InputLabel>
+        <FormControl sx={{ color: 'secondary', marginTop: '15px' }}>
+          <InputLabel id="categoryFilter" color='secondary' sx={{ color: 'secondary.main' }}>Category</InputLabel>
 
           <Select
             labelId="categoryFilter"
@@ -175,7 +209,7 @@ export default function ParticipantForm(props) {
           >
             {
               categories && categories.map((category) => {
-                return(
+                return (
                   <MenuItem key={category.id} value={parseInt(category.id)}>{category.name}</MenuItem>
                 )
               })
