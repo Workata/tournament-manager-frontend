@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import * as EmailValidator from 'email-validator';
 
 // * material UI
 import {
@@ -43,6 +44,7 @@ export default function Clubs() {
   const [name, setName] = useState('');
   const [ceo, setCeo] = useState('');
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
 
 
   // * state for all clubs from the DB
@@ -78,9 +80,22 @@ export default function Clubs() {
     });
   }
 
+  const emailValidation = () => {
+    if(EmailValidator.validate(email)){
+        setEmailError(false);
+    }
+    else{
+      setEmailError(true);
+    }
+}
+
   useEffect(() => {
     fetchClubs();
   }, []);
+
+  useEffect(() => {
+    emailValidation();
+  }, [email]);
 
   return (
     <Box
@@ -145,6 +160,7 @@ export default function Clubs() {
             sx={{width: '300px', marginLeft: 'auto', marginRight: 'auto', marginTop: "40px"}}
             label="Name"
             type="text"
+            required
             color="secondary"
             onChange={ (event) => { setName(event.target.value)} }
           />
@@ -153,6 +169,7 @@ export default function Clubs() {
             sx={{width: '300px', marginLeft: 'auto', marginRight: 'auto', marginTop: "35px"}}
             label="CEO"
             type="text"
+            required
             color="secondary"
             onChange={ (event) => { setCeo(event.target.value)} }
           />
@@ -161,14 +178,17 @@ export default function Clubs() {
             sx={{width: '300px', marginLeft: 'auto', marginRight: 'auto', marginTop: "35px"}}
             label="Email"
             type="text"
+            required
+            error={emailError}
             color="secondary"
-            onChange={ (event) => { setEmail(event.target.value)} }
+            onChange={ (event) => {setEmail(event.target.value)} }
           />
 
         <Button
           sx={{width: '100px', height: '40px', marginLeft: 'auto', marginRight: 'auto', marginTop: "40px"}}
           variant="outlined"
           color="secondary"
+          required
           onClick={handleSubmit}
         >
           Submit
