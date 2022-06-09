@@ -9,6 +9,9 @@ import {
   Typography
 } from "@mui/material";
 
+// * navigation
+import { useNavigate} from "react-router-dom";
+
 // * others
 import PropTypes from 'prop-types';
 import React, { useState, useContext } from "react";
@@ -24,6 +27,7 @@ export default function SignIn (props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const navigate = useNavigate();
 
 
   const handleLoginButton = async () => {
@@ -33,6 +37,7 @@ export default function SignIn (props) {
       setTokenValue(res.data.access);
       setTokenCookie('token', res.data.access);
       props.setOpenSignIn(false);
+      return navigate("/admin");
     }, (err) => {
       console.log(err)
       setErrorMsg("Wrong username or password!");

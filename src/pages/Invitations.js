@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 
 // * material UI
 import {
@@ -17,6 +17,8 @@ import { DataGrid } from '@mui/x-data-grid';
 // eslint-disable-next-line no-unused-vars
 import { getVerificationCodesCapacity, sendInvitations } from "../services/verificationCodeService";
 import { getClubs } from "../services/clubService";
+
+import { AppContext } from './../contexts/AppContext';
 
 //  * models
 import { VerificationCodeCapacity } from "../models/VerificationCodeCapacity";
@@ -64,8 +66,10 @@ export default function Invitations() {
   // * state for all clubs from the DB
   const [verificationCodesCapacity, setVerificationCodesCapacity] = useState();
 
+  const { tokenValue } = useContext(AppContext);
+
   const fetchVerificationCodesCapacity = () => {
-    getVerificationCodesCapacity((res) => {
+    getVerificationCodesCapacity(tokenValue, (res) => {
       let verificationCodesCapacityObjects = res.data.map(
         (verificationCodesCapacityJson) => new VerificationCodeCapacity(verificationCodesCapacityJson)
       );
@@ -94,7 +98,7 @@ export default function Invitations() {
       participants_limit: participantsLimit
     }
 
-    sendInvitations(body, (res) => {
+    sendInvitations(body, tokenValue, (res) => {
       console.log(res);
 
       // * clean up fields

@@ -1,20 +1,13 @@
 import axios from 'axios';
 
-export const updateDuel = (duelId, body, callback, errorcallback) => {
-  axios.patch(`/duels/${duelId}`, body).then( res => {
-    if(callback != null){
-      callback(res);
+export const setDuelWinner = (participantId, tokenValue, callback, errorcallback) => {
+  axios.post(`/setduelwinner/${participantId}`, {}, {
+    headers: {
+      'Accept': '*/*',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${tokenValue}`
     }
-  }
-  ).catch( err => {
-    if(errorcallback != null){
-      errorcallback(err);
-   }
-  })
-}
-
-export const setDuelWinner = (participantId, callback, errorcallback) => {
-  axios.post(`/setduelwinner/${participantId}`).then( res => {
+  }).then( res => {
     if(callback != null){
       callback(res);
     }
