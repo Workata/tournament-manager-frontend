@@ -28,6 +28,7 @@ import { Club } from "../models/Club";
 
 import Moment from "moment";
 
+import UserFeedback from "../components/UserFeedback";
 
 export default function AddParticipants() {
   const [allForms, setAllForms] = useState({});
@@ -40,6 +41,7 @@ export default function AddParticipants() {
   const [club, setClub] = useState('');   // * currently selected club
   const [clubs, setClubs] = useState();   // * all clubs
 
+  const [submitFeedback, setSubmitFeedback] = useState({open: false, severity: 'error', message: '' });
 
   const handleAddForm = () => {
     setParticipantsForms(participantsForms => (
@@ -74,8 +76,10 @@ export default function AddParticipants() {
         }
         createParticipant(body, (res) => {
           console.log(res);
+          setSubmitFeedback({open: true, severity: 'success', message: 'Participants have been added successfully.' });
         }, (err) => {
           console.log(err);
+          setSubmitFeedback({open: true, severity: 'error', message: (err.message) });
         })
       }
     }, (err) => {
@@ -206,6 +210,7 @@ export default function AddParticipants() {
         </Box>
 
       </Box>
+      <UserFeedback setFeedbackState={setSubmitFeedback} feedbackState={submitFeedback}/>
     </Box>
   );
 }

@@ -4,20 +4,27 @@ import { Box, Typography, Button } from "@mui/material";
 // * icons
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 
-import React from "react";
+import React, {useState} from "react";
 
 import { generateTrees } from "../services/treeService";
 
 import "../css/managementPanel.css";
 
+import UserFeedback from "../components/UserFeedback";
+
 export default function ManagementPanel() {
+
+  const [submitFeedback, setSubmitFeedback] = useState({open: false, severity: 'error', message: '' });
+
   const handleGenerateTrees = () => {
     generateTrees(
       (res) => {
         console.log(res);
+        setSubmitFeedback({open: true, severity: 'success', message: 'All brackets have been generated successfully.' });
       },
       (err) => {
         console.log(err);
+        setSubmitFeedback({open: true, severity: 'error', message: (err.message) });
       }
     );
   };
@@ -64,6 +71,7 @@ export default function ManagementPanel() {
           </Box>
         </Box>
       </div>
+      <UserFeedback setFeedbackState={setSubmitFeedback} feedbackState={submitFeedback}/>
     </div>
   );
 }
