@@ -15,6 +15,8 @@ import { createCategory, getCategories } from "../services/categoryService";
 //  * models
 import { Category } from "../models/Category";
 
+import UserFeedback from "../components/UserFeedback";
+
 const columns = [
   { field: 'id', headerName: 'ID', width: 90 },
   {
@@ -40,6 +42,8 @@ export default function Categories() {
   // * state for all categories from the DB
   const [categories, setCategories] = useState();
 
+  const [submitFeedback, setSubmitFeedback] = useState({open: false, severity: 'error', message: '' });
+
   const fetchCategories = () => {
     getCategories((res) => {
       let categoriesObjects = res.data.map(
@@ -64,8 +68,10 @@ export default function Categories() {
 
       // * fetch categories again to have updated list
       fetchCategories();
+      setSubmitFeedback({open: true, severity: 'success', message: 'Category has been added successfully.' });
     }, (err) => {
       console.log(err);
+      setSubmitFeedback({open: true, severity: 'error', message: (err.message) });
     });
   }
 
@@ -159,6 +165,7 @@ export default function Categories() {
 
         </Box>
       </Box>
+      <UserFeedback setFeedbackState={setSubmitFeedback} feedbackState={submitFeedback}/>
     </Box>
   );
 }
